@@ -144,7 +144,7 @@ else:
     regular_skills = [i if st.checkbox(i) else 0 for i in data[str(vahta)][exp_conv[experience]]['regular_skills']]
     rare_skills = [i if st.checkbox(i) else 0 for i in data[str(vahta)][exp_conv[experience]]['rare_skills']]
 
-#1
+#13
 
     try:
         region_coef = float(data[str(vahta)][exp_conv[experience]]['region_coefs'][region])
