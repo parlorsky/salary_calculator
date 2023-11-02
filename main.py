@@ -37,6 +37,7 @@ model = cb.CatBoostRegressor()
 model = model.load_model(f"model/{prof_id}.json", format  = 'json')
 
 vahta = 1 if st.checkbox('Вахта') else 0
+is_parttime = 1 if st.checkbox('Неполная занятость') else 0
 
 
 st.header(f"Оценка стоимости навыков {inp_species}")
@@ -53,7 +54,7 @@ industry_group = str(regions[regions['region_name'] == region.split('_')[1]]['in
 st.subheader("Выберите опыт работы")
 left_column1, right_column1 = st.columns(2)
 
-
+#['year', 'is_vahta', 'experience_id', 'region_name', 'industry_group', 'is_parttime',
 with left_column1:
 
     experience = st.radio(
@@ -63,30 +64,13 @@ with left_column1:
     st.subheader(model.feature_names_)
 
 
-    st.subheader(f"Базовые навыки {inp_species} {experience}")
-    for number,skill in enumerate(data[str(vahta)][str(industry_group)][exp_conv[experience]]['base_skills']):
-        st.write(f'{number+1}) {skill}')
-
     st.subheader("Выберите навыки для подсчета зарплаты по вакансии.")
-    regular_skills = [i if st.checkbox(i) else 0 for i in data[str(vahta)][str(industry_group)][exp_conv[experience]]['regular_skills']]
-    rare_skills = [i if st.checkbox(i) else 0 for i in data[str(vahta)][str(industry_group)][exp_conv[experience]]['rare_skills']]
+    skills = [i if st.checkbox(i) else 0 for i in model.feature_names_[6:]]
 
 
-    try:
-        region_coef = float(data[str(vahta)][str(industry_group)][exp_conv[experience]]['region_coefs'][region])
-    except:
-        region_coef =1
     
     if st.button('Рассчитать зарплату'):
-        prediction  = data[str(vahta)][str(industry_group)][exp_conv[experience]]['base_salary'] 
-        for i in regular_skills:
-            if i != 0:
-                prediction += data[str(vahta)][str(industry_group)][exp_conv[experience]]["regular_values"][i]
-        for i in rare_skills:
-            if i != 0:
-                prediction += data[str(vahta)][str(industry_group)][exp_conv[experience]]["rare_values"][i]
-
-        prediction *= region_coef
+        prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
 
         st.write(f"ЗП: {round(prediction,2)}")
     
