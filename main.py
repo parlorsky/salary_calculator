@@ -52,6 +52,9 @@ industry_group = str(regions[regions['region_name'] == region.split('_')[1]]['in
 
 st.subheader("Выберите опыт работы")
 left_column1, right_column1 = st.columns(2)
+
+print(model.feature_names_)
+
 with left_column1:
 
     experience = st.radio(
