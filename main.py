@@ -2,12 +2,12 @@ import pandas as pd
 import json
 import numpy as np
 import streamlit as st
-# from catboost_install import install 
+from catboost_install import install 
 import os
-# try:
-#     import catboost as cb
-# except:
-#     os.
+try:
+    import catboost as cb
+except:
+    install('catboost')
 
 
 import catboost as cb # pip install catboost --pre
