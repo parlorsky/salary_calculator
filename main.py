@@ -65,7 +65,7 @@ with left_column1:
 
 
     st.subheader("Выберите навыки для подсчета зарплаты по вакансии.")
-    skills = [i if st.checkbox(i) else 0 for i in model.feature_names_[6:]]
+    skills = [1 if st.checkbox(i) else 0 for i in model.feature_names_[6:]]
 
 
     
