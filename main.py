@@ -2,8 +2,13 @@ import pandas as pd
 import json
 import numpy as np
 import streamlit as st
-# !pip install catboost
-import catboost
+from catboost_install import install
+try:
+    import catboost as cb
+except:
+    install('catboost')
+
+import catboost as cb
 
 
 regions = pd.read_csv('regions.csv')
