@@ -8,9 +8,8 @@ try:
     import catboost as cb
 except:
     install('catboost')
+    import catboost as cb 
 
-
-import catboost as cb # pip install catboost --pre
 
 
 
