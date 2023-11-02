@@ -2,7 +2,8 @@ import pandas as pd
 import json
 import numpy as np
 import streamlit as st
-
+!pip install catboost
+import catboost
 
 
 regions = pd.read_csv('regions.csv')
@@ -29,26 +30,8 @@ for i in range(regions.shape[0]):
 
 prof_id = professions[inp_species]
 
-data = json.load(open(f'models/{prof_id}.json'))
-
-available_choices =  {0: {0:{0:0,1:0,2:0},\
-                      1:{0:0,1:0,2:0},\
-                      2:{0:0,1:0,2:0}},\
-                      1:{0:0,1:0,2:0}}
-
-is_vahta_here = 0
-
-for is_vahta in [0,1]:
-    for industry_group in [0,1,2]:
-        for experience_id in [0,1,2]:
-            if is_vahta == 0:
-                if len(list(data[str(is_vahta)][str(industry_group)][str(experience_id)].keys())) != 0:
-                    available_choices[is_vahta][industry_group][experience_id] = 1
-            else:
-                if len(list(data[str(is_vahta)][str(experience_id)].keys())) != 0:
-                    available_choices[is_vahta][experience_id] = 1
-                    is_vahta_here = 1
-
+model = cb.CatBoostRegressor()
+model = model.load_model(f"/model/{prof_id}.json")
 
 if is_vahta_here:
     vahta = '1' if st.checkbox('Вахта') else '0'
