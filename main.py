@@ -53,7 +53,6 @@ industry_group = str(regions[regions['region_name'] == region.split('_')[1]]['in
 st.subheader("Выберите опыт работы")
 left_column1, right_column1 = st.columns(2)
 
-print(model.feature_names_)
 
 with left_column1:
 
@@ -61,6 +60,7 @@ with left_column1:
         'Опыт работы:',
         [0,1,2])
 
+    st.subheader(model.feature_names_)
 
 
     st.subheader(f"Базовые навыки {inp_species} {experience}")
