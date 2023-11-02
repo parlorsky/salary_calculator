@@ -61,7 +61,7 @@ with left_column1:
         'Опыт работы:',
         [0,1,2])
 
-    st.subheader(model.feature_names_)
+    # st.subheader(model.feature_names_)
 
 
     st.subheader("Выберите навыки для подсчета зарплаты по вакансии.")
