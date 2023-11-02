@@ -2,7 +2,7 @@ import pandas as pd
 import json
 import numpy as np
 import streamlit as st
-!pip install catboost
+# !pip install catboost
 import catboost
 
 
