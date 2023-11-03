@@ -5,9 +5,7 @@ import streamlit as st
 import os
 import catboost as cb 
 
-prediction = 0
-predicts_pool = []
-skills_pool = []
+
 regions = pd.read_csv('regions.csv')
 
 professions = json.load(open('professions.json'))
@@ -18,6 +16,10 @@ left_column, right_column = st.columns(2)
 
 exp_conv = {'Без опыта':'0', 'От 1 до 3 лет':'1','От 3 лет':'2'}
 exp_conv_reverse = {'0':'Без опыта', '1':'От 1 до 3 лет','2':'От 3 лет'}
+
+prediction = 0
+predicts_pool = []
+skills_pool = []
 
 with left_column:
     inp_species = st.selectbox(
@@ -80,7 +82,8 @@ with left_column1:
             prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
             skills_pool = [x for x in skills]
             predicts_pool += [prediction]
-        st.write(predicts_pool)
-        st.write(np.abs(sum(np.array(skills) - np.array(skills_pool))))
-        st.write(f"ЗП: {round(prediction,2)}")
+    st.write(predicts_pool)
+    st.write(np.abs(sum(np.array(skills) - np.array(skills_pool))))
+    st.write(f"ЗП: {round(prediction,2)}")
+        
     
