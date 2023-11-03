@@ -16,9 +16,9 @@ prof_list = list(professions.keys())
 exp_conv = {'Без опыта':'0', 'От 1 до 3 лет':'1','От 3 лет':'2'}
 exp_conv_reverse = {'0':'Без опыта', '1':'От 1 до 3 лет','2':'От 3 лет'}
 
-prediction = 0
-predicts_pool = []
-skills_pool = []
+st.session_state.prediction = 0
+st.session_state.predicts_pool = []
+st.session_state.skills_pool = []
 
 
 left_column, right_column = st.columns(2)
@@ -69,22 +69,22 @@ with left_column1:
     skills = [1 if st.checkbox(i) else 0 for i in model.feature_names_[6:]]
     
     if st.button('Рассчитать зарплату'):
-        if len(predicts_pool):
+        if len(st.session_state.predicts_pool):
             if np.abs(sum(np.array(skills) - np.array(skills_pool[0]))):
                 st.write('1')
-                prediction = predicts_pool[0] + abs(model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills) - predicts_pool[0])
-                predicts_pool[0] = prediction
+                st.session_state.prediction = st.session_state.predicts_pool[0] + abs(model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills) - st.session_state.predicts_pool[0])
+                st.session_state.predicts_pool[0] = st.session_state.prediction
             else:
                 st.write('2')
-                prediction = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
-                predicts_pool = []
-                skills_pool = []
+                st.session_state.prediction = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
+                st.session_state.predicts_pool = []
+                st.session_state.skills_pool = []
                 
         else:
             st.write('3')
-            prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
-            skills_pool = [x for x in skills]
-            predicts_pool += [prediction]
+            st.session_state.prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
+            st.session_state.skills_pool = [x for x in skills]
+            st.session_state.predicts_pool += [prediction]
     st.write(predicts_pool)
     st.write(np.abs(sum(np.array(skills) - np.array(skills_pool))))
     st.write(f"ЗП: {round(prediction,2)}")
