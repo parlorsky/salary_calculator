@@ -54,6 +54,7 @@ left_column1, right_column1 = st.columns(2)
 prediction = 0
 predicts_pool = []
 skills_pool = []
+st.write('restart')
 #['year', 'is_vahta', 'experience_id', 'region_name', 'industry_group', 'is_parttime',
 with left_column1:
 
