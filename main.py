@@ -61,16 +61,11 @@ with left_column1:
         'Опыт работы:',
         [0,1,2])
 
-    # st.subheader(model.feature_names_)
-
-
     st.subheader("Выберите навыки для подсчета зарплаты по вакансии.")
     skills = [1 if st.checkbox(i) else 0 for i in model.feature_names_[6:]]
-
-
     
     if st.button('Рассчитать зарплату'):
-        if prediction:
+        if prediction != 0:
             if np.abs(sum(np.array(skills) - np.array(skills_pool[0]))):
                 st.write('1')
                 prediction = predicts_pool[0] + abs(model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills) - predicts_pool[0])
