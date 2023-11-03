@@ -2,27 +2,23 @@ import pandas as pd
 import json
 import numpy as np
 import streamlit as st
+# from catboost_install import install 
 import os
 import catboost as cb 
 
 
-regions = pd.read_csv('regions.csv')
 
+
+regions = pd.read_csv('regions.csv')
+# data = json.load(open('values.json'))
 professions = json.load(open('professions.json'))
 
 prof_list = list(professions.keys())
 
+left_column, right_column = st.columns(2)
 
 exp_conv = {'Без опыта':'0', 'От 1 до 3 лет':'1','От 3 лет':'2'}
 exp_conv_reverse = {'0':'Без опыта', '1':'От 1 до 3 лет','2':'От 3 лет'}
-
-st.session_state.prediction = 0
-st.session_state.predicts_pool = []
-st.session_state.skills_pool = []
-
-
-left_column, right_column = st.columns(2)
-
 
 with left_column:
     inp_species = st.selectbox(
@@ -45,6 +41,7 @@ is_parttime = 1 if st.checkbox('Неполная занятость') else 0
 
 
 st.header(f"Оценка стоимости навыков {inp_species}")
+
 st.subheader("Выберите регион вакансии")
 region = st.selectbox(
     'Напишите регион вакансии',
@@ -57,7 +54,6 @@ industry_group = str(regions[regions['region_name'] == region.split('_')[1]]['in
 st.subheader("Выберите опыт работы")
 left_column1, right_column1 = st.columns(2)
 
-
 #['year', 'is_vahta', 'experience_id', 'region_name', 'industry_group', 'is_parttime',
 with left_column1:
 
@@ -65,28 +61,16 @@ with left_column1:
         'Опыт работы:',
         [0,1,2])
 
+    # st.subheader(model.feature_names_)
+
+
     st.subheader("Выберите навыки для подсчета зарплаты по вакансии.")
     skills = [1 if st.checkbox(i) else 0 for i in model.feature_names_[6:]]
+
+
     
     if st.button('Рассчитать зарплату'):
-        if len(st.session_state.predicts_pool):
-            if np.abs(sum(np.array(skills) - np.array(st.session_state.skills_pool[0]))):
-                st.write('1')
-                st.session_state.prediction = st.session_state.predicts_pool[0] + abs(model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills) - st.session_state.predicts_pool[0])
-                st.session_state.predicts_pool[0] = st.session_state.prediction
-            else:
-                st.write('2')
-                st.session_state.prediction = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
-                st.session_state.predicts_pool = []
-                st.session_state.skills_pool = []
-                
-        else:
-            st.write('3')
-            st.session_state.prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
-            st.session_state.skills_pool = [x for x in skills]
-            st.session_state.predicts_pool += [st.session_state.prediction]
-    st.write(st.session_state.predicts_pool)
-    st.write(np.abs(sum(np.array(skills) - np.array(st.session_state.skills_pool))))
-    st.write(f"ЗП: {round(st.session_state.prediction,2)}")
-        
+        prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
+
+        st.write(f"ЗП: {round(prediction,2)}")
     
