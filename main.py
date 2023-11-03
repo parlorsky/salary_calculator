@@ -72,5 +72,5 @@ with left_column1:
     if st.button('Рассчитать зарплату'):
         prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
 
-        st.write(f"ЗП: {round(prediction,2)}")
+        st.subheader(f"Предсказание: {round(prediction//100*100)}")
     
