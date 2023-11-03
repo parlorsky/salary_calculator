@@ -12,7 +12,6 @@ professions = json.load(open('professions.json'))
 
 prof_list = list(professions.keys())
 
-left_column, right_column = st.columns(2)
 
 exp_conv = {'Без опыта':'0', 'От 1 до 3 лет':'1','От 3 лет':'2'}
 exp_conv_reverse = {'0':'Без опыта', '1':'От 1 до 3 лет','2':'От 3 лет'}
@@ -20,6 +19,10 @@ exp_conv_reverse = {'0':'Без опыта', '1':'От 1 до 3 лет','2':'О�
 prediction = 0
 predicts_pool = []
 skills_pool = []
+
+
+left_column, right_column = st.columns(2)
+
 
 with left_column:
     inp_species = st.selectbox(
