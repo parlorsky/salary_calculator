@@ -85,6 +85,6 @@ with left_column1:
             skills_pool = [x for x in skills]
             predicts_pool += [prediction]
         st.write(predicts_pool)
-        st.write(np.abs(sum(np.array(skills) - np.array(skills_pool[0]))))
+        st.write(np.abs(sum(np.array(skills) - np.array(skills_pool))))
         st.write(f"ЗП: {round(prediction,2)}")
     
