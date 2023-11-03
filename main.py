@@ -6,7 +6,7 @@ import os
 import catboost as cb 
 
 
-
+st.write('restart_0')
 regions = pd.read_csv('regions.csv')
 
 professions = json.load(open('professions.json'))
