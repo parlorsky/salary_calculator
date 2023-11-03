@@ -72,6 +72,7 @@ with left_column1:
     if st.button('Рассчитать зарплату'):
         if prediction:                    
             if np.abs(sum(np.array(skills) - np.array(skills_pool[0]))):
+                st.write('сработало')
                 prediction = predicts_pool[0] + abs(model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills) - predicts_pool[0])
                 predicts_pool[0] = prediction
             else:
