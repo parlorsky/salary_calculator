@@ -82,11 +82,9 @@ with left_column1:
                 
         else:
             prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
-            skills_pool += [skills]
+            skills_pool = [x for x in skills]
             predicts_pool += [prediction]
         st.write(predicts_pool)
-        st.write(skills_pool[0])
-        st.write(skills)
         st.write(np.abs(sum(np.array(skills) - np.array(skills_pool[0]))))
         st.write(f"ЗП: {round(prediction,2)}")
     
