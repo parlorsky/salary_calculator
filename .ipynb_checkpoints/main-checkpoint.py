@@ -32,7 +32,7 @@ for i in range(regions.shape[0]):
 prof_id = professions[inp_species]
 
 model = cb.CatBoostRegressor()
-model = model.load_model(f"model/{prof_id}.json", format  = 'json')
+model = model.load_model(f"model/{prof_id}.cbm")
 
 vahta = 1 if st.checkbox('Вахта') else 0
 is_parttime = 1 if st.checkbox('Неполная занятость') else 0
