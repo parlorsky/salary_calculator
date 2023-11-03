@@ -70,7 +70,7 @@ with left_column1:
     
     if st.button('Рассчитать зарплату'):
         if len(st.session_state.predicts_pool):
-            if np.abs(sum(np.array(skills) - np.array(skills_pool[0]))):
+            if np.abs(sum(np.array(skills) - np.array(st.session_state.skills_pool[0]))):
                 st.write('1')
                 st.session_state.prediction = st.session_state.predicts_pool[0] + abs(model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills) - st.session_state.predicts_pool[0])
                 st.session_state.predicts_pool[0] = st.session_state.prediction
@@ -84,9 +84,9 @@ with left_column1:
             st.write('3')
             st.session_state.prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
             st.session_state.skills_pool = [x for x in skills]
-            st.session_state.predicts_pool += [prediction]
-    st.write(predicts_pool)
-    st.write(np.abs(sum(np.array(skills) - np.array(skills_pool))))
-    st.write(f"ЗП: {round(prediction,2)}")
+            st.session_state.predicts_pool += [st.session_state.prediction]
+    st.write(st.session_state.predicts_pool)
+    st.write(np.abs(sum(np.array(skills) - np.array(st.session_state.skills_pool))))
+    st.write(f"ЗП: {round(st.session_state.prediction,2)}")
         
     
