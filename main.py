@@ -54,6 +54,10 @@ industry_group = str(regions[regions['region_name'] == region.split('_')[1]]['in
 st.subheader("Выберите опыт работы")
 left_column1, right_column1 = st.columns(2)
 
+
+st.subheader(json.load(open(f'jsones_new/Bundles_{prof_id}.json')))
+st.subheader("Выберите из списка профессий только то что нужно!!!")
+
 #['year', 'is_vahta', 'experience_id', 'region_name', 'industry_group', 'is_parttime',
 with left_column1:
 
