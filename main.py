@@ -71,6 +71,9 @@ df_id_name = pd.read_csv('v3_competencies_bundles_20231010.csv')
 
 skill_id_to_names = dict(zip(df_id_name['bundle_id'], df_id_name['bundle_name']))
 names_to_skill_id = dict(zip(df_id_name['bundle_name'], df_id_name['bundle_id']))
+skills_all = model.feature_names_[6:]
+bd_to_model_skills = {' '.join(model_skill.split()[:-1]): model_skill for model_skill in skills_all}
+
 
 st.subheader("Выберите опыт работы")
 left_column1, right_column1 = st.columns([1, 2])
@@ -83,20 +86,20 @@ with left_column1:
         [0,1,2])
 
     # st.subheader(model.feature_names_)
-    skills_all = model.feature_names_[6:]
     parent_check = {}
     children_check = {}
     st.subheader("Выберите навыки для подсчета зарплаты по вакансии.")
     for name in skills_all:
-        if names_to_skill_id[name] in parents_to_children:
+        if names_to_skill_id[' '.join(name.split()[:-1])] in parents_to_children:
             parent_check[name] = st.checkbox(name)
 
     for parent_name in parent_check:
         if parent_check[parent_name]:
-            if parents_to_children[parent_name]:
+            bd_parent_name = ' '.join(name.split()[:-1])
+            if parents_to_children[names_to_skill_id[bd_parent_name]]:
                 right_column1.write(parent_name)
-                for children_id in parents_to_children[parent_name]:
-                    children_name = skill_id_to_names[children_id]
+                for children_id in parents_to_children[names_to_skill_id[bd_parent_name]]:
+                    children_name = bd_to_model_skills[skill_id_to_names[children_id]]
                     children_check[children_name] = right_column1.checkbox(children_name)
     
 
