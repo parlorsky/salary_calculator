@@ -73,4 +73,5 @@ with left_column1:
         prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
 
         st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
+        st.subheader(f'скиллы: {skills}')
     
