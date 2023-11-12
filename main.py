@@ -7,7 +7,7 @@ import os
 import catboost as cb 
 
 
-
+#
 
 regions = pd.read_csv('regions.csv')
 # data = json.load(open('values.json'))
