@@ -88,7 +88,7 @@ with left_column1:
     children_check = {}
     st.subheader("Выберите навыки для подсчета зарплаты по вакансии.")
     for name in skills_all:
-        if names_to_skill_id[name] in parent:
+        if names_to_skill_id[name] in parents_to_children:
             parent_check[name] = st.checkbox(name)
 
     for parent_name in parent_check:
