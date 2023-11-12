@@ -57,17 +57,20 @@ for skill in parents_and_children:
             parents_to_children[skill] = set()
     else:
         for parent in parents_and_children[skill][0]:
+            parent = str(parent)
             if not parent in parents_to_children:
                 parents_to_children[parent] = set()
             parents_to_children[parent].add(skill)
 
     if parents_and_children[skill][1]:
         for child in parents_and_children[skill][1]:
+            child = str(child)
             if not skill in parents_to_children:
                 parents_to_children[skill] = set()
             parents_to_children[skill].add(child)
 
 df_id_name = pd.read_csv('v3_competencies_bundles_20231010.csv')
+df_id_name['bundle_id'] = df_id_name['bundle_id'].astype(str)
 # df_id_name['bundle_name'] = df_id_name['bundle_name'].str.replace('\xa0', ' ')
 
 skill_id_to_names = dict(zip(df_id_name['bundle_id'], df_id_name['bundle_name']))
