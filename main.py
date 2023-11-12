@@ -91,7 +91,6 @@ with left_column1:
     children_check = {}
     st.subheader("Выберите навыки для подсчета зарплаты по вакансии.")
     skills_all = model.feature_names_[6:]
-    st.text(prof_id)
     for name in skills_all:
         if names_to_skill_id[name.replace(' ' + name.split()[-1], '')] in parents_to_children:
             parent_check[name] = st.checkbox(name)
@@ -111,7 +110,6 @@ with left_column1:
 
     # st.subheader("Выберите навыки для подсчета зарплаты по вакансии.")
     skills = [int(parent_check.get(name, 0) or  children_check.get(name, 0)) for name in model.feature_names_[6:]]
-    skills_names = model.feature_names_[skills]
 
     
     if st.button('Рассчитать зарплату'):
