@@ -82,6 +82,17 @@ bd_to_model_skills = {' '.join(model_skill.split()[:-1]): model_skill for model_
 st.subheader("Выберите опыт работы")
 left_column1, right_column1 = st.columns([1, 2])
 
+skill_groups = ['(СК)', '(ЯС)', 'ППКСУП', 'СПК', '(ИС)', '(УТУТ)', '(ОПТ)', 'Другие']
+groups_distr = {group: [] for group in skill_groups}
+for skill in skills_all:
+    for group in skill_groups:
+        if group in skill:
+            groups_distr[group].append(skill)
+            break
+    else:
+        groups_distr['Другие'].append(skill)
+        
+    
 #['year', 'is_vahta', 'experience_id', 'region_name', 'industry_group', 'is_parttime',
 with left_column1:
 
@@ -92,19 +103,21 @@ with left_column1:
     # st.subheader(model.feature_names_)
     parent_check = {}
     children_check = {}
+    arr = st.multiselect('Выберите виды навыков', skill_groups)
     st.subheader("Выберите навыки для подсчета зарплаты по вакансии.")
     skills_all = model.feature_names_[6:]
-    for name in skills_all:
-        if names_to_skill_id[name.replace(' ' + name.split()[-1], '')] in parents_to_children:
-            parent_check[name] = st.checkbox(name)
-            parent_name = name
-            if parent_check[parent_name]:
-                bd_parent_name = parent_name.replace(' ' + parent_name.split()[-1], '')
-                if parents_to_children[names_to_skill_id[bd_parent_name]]:
-                    st.write(parent_name)
-                    for children_id in parents_to_children[names_to_skill_id[bd_parent_name]]:
-                        children_name = bd_to_model_skills[skill_id_to_names[children_id]]
-                        children_check[children_name] = st.checkbox(children_name)
+    for group_choice in arr:
+        for name in groups_distr[group_choice]:
+            if names_to_skill_id[name.replace(' ' + name.split()[-1], '')] in parents_to_children:
+                parent_check[name] = st.checkbox(name)
+                parent_name = name
+                if parent_check[parent_name]:
+                    bd_parent_name = parent_name.replace(' ' + parent_name.split()[-1], '')
+                    if parents_to_children[names_to_skill_id[bd_parent_name]]:
+                        # st.write(parent_name)
+                        for children_id in parents_to_children[names_to_skill_id[bd_parent_name]]:
+                            children_name = bd_to_model_skills[skill_id_to_names[children_id]]
+                            children_check[children_name] = st.checkbox(children_name)
 
     
 
