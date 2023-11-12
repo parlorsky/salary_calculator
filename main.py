@@ -68,7 +68,7 @@ for skill in parents_and_children:
             parents_to_children[skill].add(child)
 
 df_id_name = pd.read_csv('v3_competencies_bundles_20231010.csv')
-df_id_name['bundle_name'] = df_id_name['bundle_name'].str.replace('\xa0', ' ')
+# df_id_name['bundle_name'] = df_id_name['bundle_name'].str.replace('\xa0', ' ')
 
 skill_id_to_names = dict(zip(df_id_name['bundle_id'], df_id_name['bundle_name']))
 names_to_skill_id = dict(zip(df_id_name['bundle_name'], df_id_name['bundle_id']))
@@ -93,13 +93,12 @@ with left_column1:
     skills_all = model.feature_names_[6:]
     st.text(prof_id)
     for name in skills_all:
-        st.text([' '.join(name.split()[:-1])])
-        if names_to_skill_id[' '.join(name.split()[:-1])] in parents_to_children:
+        if names_to_skill_id[name.replace(' ' + name.split()[-1], '')] in parents_to_children:
             parent_check[name] = st.checkbox(name)
 
     for parent_name in parent_check:
         if parent_check[parent_name]:
-            bd_parent_name = ' '.join(name.split()[:-1])
+            bd_parent_name = parent_name.replace(' ' + parent_name.split()[-1], '')
             if parents_to_children[names_to_skill_id[bd_parent_name]]:
                 right_column1.write(parent_name)
                 for children_id in parents_to_children[names_to_skill_id[bd_parent_name]]:
