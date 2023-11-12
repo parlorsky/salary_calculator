@@ -93,7 +93,7 @@ with left_column1:
     skills_all = model.feature_names_[6:]
 
     for name in skills_all:
-        st.text([name, ' '.join(name.split()[:-1])])
+        st.text([name])
         if names_to_skill_id[' '.join(name.split()[:-1])] in parents_to_children:
             parent_check[name] = st.checkbox(name)
 
