@@ -68,6 +68,7 @@ for skill in parents_and_children:
             parents_to_children[skill].add(child)
 
 df_id_name = pd.read_csv('v3_competencies_bundles_20231010.csv')
+df_id_name['bundle_name'] = df_id_name['bundle_name'].str.replace('\xa0', ' ')
 
 skill_id_to_names = dict(zip(df_id_name['bundle_id'], df_id_name['bundle_name']))
 names_to_skill_id = dict(zip(df_id_name['bundle_name'], df_id_name['bundle_id']))
