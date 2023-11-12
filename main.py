@@ -91,7 +91,7 @@ with left_column1:
     children_check = {}
     st.subheader("Выберите навыки для подсчета зарплаты по вакансии.")
     skills_all = model.feature_names_[6:]
-
+    st.text(prof_id)
     for name in skills_all:
         st.text([' '.join(name.split()[:-1])])
         if names_to_skill_id[' '.join(name.split()[:-1])] in parents_to_children:
