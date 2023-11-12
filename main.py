@@ -94,8 +94,7 @@ for skill in skills_all:
 
 spk_distr = {}
 for skill_name in skills_all:
-    spk_i = skill_name.split()[-1].split('_')[:-1]
-    st.text(spk_i)
+    spk_i = skill_name.split()[-1].split('_')[1:-1][0]
     if not spk_i in spk_distr:
         spk_distr[spk_i] = []
     spk_distr[spk_i].append(skill_name)
@@ -118,6 +117,7 @@ with left_column1:
     if arr:
         st.subheader("Выберите вид СПК.")
         arr_spk = st.multiselect('СПК:', list(spk_distr.keys()))
+    x = 1 + 1
 
     for group_choice in arr:
         for spk in arr_spk:
