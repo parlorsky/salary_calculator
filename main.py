@@ -49,10 +49,31 @@ region = st.selectbox(
 
 industry_group = str(regions[regions['region_name'] == region.split('_')[1]]['industry_group'].iloc[0])
 
+parents_and_children = dict(json.load(open(f'jsones_new/Bundles_{prof_id}.json')))
+parents_to_children = {}
+for skill in parents_and_children:
+    if not parents_and_children[skill][0]:
+        if not skill in parents_to_children:
+            parents_to_children[skill] = set()
+    else:
+        for parent in parents_and_children[skill][0]:
+            if not parent in parents_to_children:
+                parents_to_children[parent] = set()
+            parents_to_children[parent].add(skill)
 
+    if parents_and_children[skill][1]:
+        for child in parents_and_children[skill][1]:
+            if not skill in parents_to_children:
+                parents_to_children[skill] = set()
+            parents_to_children[skill].add(child)
+
+df_id_name = pd.read_csv('v3_competencies_bundles_20231010.csv')
+
+skill_id_to_names = dict(zip(df_id_name['bundle_id'], df_id_name['bundle_name']))
+names_to_skill_id = dict(zip(df_id_name['bundle_name'], df_id_name['bundle_id']))
 
 st.subheader("Выберите опыт работы")
-left_column1, right_column1 = st.columns(2)
+left_column1, right_column1 = st.columns([1, 2])
 
 #['year', 'is_vahta', 'experience_id', 'region_name', 'industry_group', 'is_parttime',
 with left_column1:
@@ -62,16 +83,34 @@ with left_column1:
         [0,1,2])
 
     # st.subheader(model.feature_names_)
-
-
+    skills_all = model.feature_names_[6:]
+    parent_check = {}
+    children_check = {}
     st.subheader("Выберите навыки для подсчета зарплаты по вакансии.")
-    skills = [1 if st.checkbox(i) else 0 for i in model.feature_names_[6:]]
-    print(skills)
+    for name in skills_all:
+        if names_to_skill_id[name] in parent:
+            parent_check[name] = st.checkbox(name)
+
+    for parent_name in parent_check:
+        if parent_check[parent_name]:
+            if parents_to_children[parent_name]:
+                right_column1.write(parent_name)
+                for children_id in parents_to_children[parent_name]:
+                    children_name = skill_id_to_names[children_id]
+                    children_check[children_name] = right_column1.checkbox(children_name)
+    
+
+
+
+
+    # st.subheader("Выберите навыки для подсчета зарплаты по вакансии.")
+    skills = [int(parent_check.get(name, 0) or  children_check.get(name, 0)) for name in model.feature_names_[6:]]
+    skills_names = model.feature_names_[skills]
 
     
     if st.button('Рассчитать зарплату'):
         prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
 
         st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
-        st.subheader(f'скиллы: {skills}')
+        
     
