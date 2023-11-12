@@ -126,8 +126,7 @@ with left_column1:
 
     # st.subheader("Выберите навыки для подсчета зарплаты по вакансии.")
     skills = [int(parent_check.get(name, 0) or  children_check.get(name, 0)) for name in model.feature_names_[6:]]
-    x = 1 + 1
-    st.text(skills)
+   
     if st.button('Рассчитать зарплату'):
         prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
 
