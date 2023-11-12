@@ -97,15 +97,15 @@ with left_column1:
     for name in skills_all:
         if names_to_skill_id[name.replace(' ' + name.split()[-1], '')] in parents_to_children:
             parent_check[name] = st.checkbox(name)
+            parent_name = name
+            if parent_check[parent_name]:
+                bd_parent_name = parent_name.replace(' ' + parent_name.split()[-1], '')
+                if parents_to_children[names_to_skill_id[bd_parent_name]]:
+                    st.write(parent_name)
+                    for children_id in parents_to_children[names_to_skill_id[bd_parent_name]]:
+                        children_name = bd_to_model_skills[skill_id_to_names[children_id]]
+                        children_check[children_name] = st.checkbox(children_name)
 
-    for parent_name in parent_check:
-        if parent_check[parent_name]:
-            bd_parent_name = parent_name.replace(' ' + parent_name.split()[-1], '')
-            if parents_to_children[names_to_skill_id[bd_parent_name]]:
-                st.write(parent_name)
-                for children_id in parents_to_children[names_to_skill_id[bd_parent_name]]:
-                    children_name = bd_to_model_skills[skill_id_to_names[children_id]]
-                    children_check[children_name] = st.checkbox(children_name)
     
 
 
