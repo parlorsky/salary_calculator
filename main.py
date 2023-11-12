@@ -95,6 +95,7 @@ for skill in skills_all:
 spk_distr = {}
 for skill_name in skills_all:
     spk_i = skill_name.split()[-1].split('_')[:-1]
+    st.text(spk_i)
     if not spk_i in spk_distr:
         spk_distr[spk_i] = []
     spk_distr[spk_i].append(skill_name)
