@@ -127,7 +127,7 @@ for group_choice in arr:
     for spk in arr_spk:
         available_skills = set(groups_distr[group_choice]) & set(spk_distr[spk])
         for index, name in enumerate(available_skills):
-            col_index = index % num_cols
+            col_index = int(index > len(available_skills) // 2)
             if names_to_skill_id[name.replace(' ' + name.split()[-1], '')] in parents_to_children:
                 parent_check[name] = cols[col_index].checkbox(name)
                 parent_name = name
@@ -138,7 +138,7 @@ for group_choice in arr:
                         for children_id in parents_to_children[names_to_skill_id[bd_parent_name]]:
                             if skill_id_to_names[children_id] in bd_to_model_skills:
                                 children_name = bd_to_model_skills[skill_id_to_names[children_id]]
-                                cols[col_index].txt(children_name)
+                                txt(children_name)
                                 children_check[children_name] = cols[col_index].checkbox(children_name)
 
     
