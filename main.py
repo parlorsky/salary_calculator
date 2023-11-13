@@ -116,26 +116,24 @@ children_check = {}
 cols[0].subheader("Выберите виды навыков.")
 arr = cols[0].multiselect('Виды:', skill_groups)
 skills_all = model.feature_names_[6:]
-if arr:
-    cols[1].subheader("Выберите вид СПК.")
-    arr_spk = cols[1].multiselect('СПК:', list(spk_distr.keys()))
+cols[1].subheader("Выберите вид СПК.")
+arr_spk = cols[1].multiselect('СПК:', list(spk_distr.keys()))
 
 for group_choice in arr:
     for spk in arr_spk:
         available_skills = set(groups_distr[group_choice]) & set(spk_distr[spk])
         for index, name in enumerate(available_skills):
             col_index = index % num_cols
-            with cols[col_index]:
-                if names_to_skill_id[name.replace(' ' + name.split()[-1], '')] in parents_to_children:
-                    parent_check[name] = st.checkbox(name)
-                    parent_name = name
-                    if parent_check[parent_name]:
-                        bd_parent_name = parent_name.replace(' ' + parent_name.split()[-1], '')
-                        if parents_to_children[names_to_skill_id[bd_parent_name]]:
-                            # st.write(parent_name)
-                            for children_id in parents_to_children[names_to_skill_id[bd_parent_name]]:
-                                children_name = bd_to_model_skills[skill_id_to_names[children_id]]
-                                children_check[children_name] = st.checkbox(children_name)
+            if names_to_skill_id[name.replace(' ' + name.split()[-1], '')] in parents_to_children:
+                parent_check[name] = cols[col_index].checkbox(name)
+                parent_name = name
+                if parent_check[parent_name]:
+                    bd_parent_name = parent_name.replace(' ' + parent_name.split()[-1], '')
+                    if parents_to_children[names_to_skill_id[bd_parent_name]]:
+                        # st.write(parent_name)
+                        for children_id in parents_to_children[names_to_skill_id[bd_parent_name]]:
+                            children_name = bd_to_model_skills[skill_id_to_names[children_id]]
+                            children_check[children_name] = cols[col_index].checkbox(children_name)
 
     
 
