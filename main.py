@@ -33,7 +33,7 @@ for i in range(regions.shape[0]):
 
 prof_id = professions[inp_species]
 
-st.text(prof_id)
+# st.text(prof_id)
 
 model = cb.CatBoostRegressor()
 model = model.load_model(f"model/{prof_id}.cbm")
