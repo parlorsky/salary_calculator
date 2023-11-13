@@ -33,6 +33,8 @@ for i in range(regions.shape[0]):
 
 prof_id = professions[inp_species]
 
+st.text(prof_id)
+
 model = cb.CatBoostRegressor()
 model = model.load_model(f"model/{prof_id}.cbm")
 
@@ -95,7 +97,8 @@ for skill in skills_all:
 spk_distr = {}
 for skill_name in skills_all:
     spk_i = skill_name.split()[-1].split('_')[1][:-1]
-    st.text([skill_name, spk_i])
+    if not spk_i.isdigit():
+        continue
     if not spk_i in spk_distr:
         spk_distr[spk_i] = []
     spk_distr[spk_i].append(skill_name)
