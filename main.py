@@ -132,19 +132,25 @@ for group_choice in arr:
                 if name in used:
                     continue
                 used.add(name)
-                parent_check[name] = cols[col_index].checkbox(name)
-                parent_name = name
-                if parent_check[parent_name]:
-                    bd_parent_name = parent_name.replace(' ' + parent_name.split()[-1], '')
-                    if names_to_skill_id[bd_parent_name] in parents_to_children and parents_to_children[names_to_skill_id[bd_parent_name]]:
-                        # st.write(parent_name)
-                        for children_id in parents_to_children[names_to_skill_id[bd_parent_name]]:
-                            if skill_id_to_names[children_id] in bd_to_model_skills and not bd_to_model_skills[skill_id_to_names[children_id]] in parents_to_children:
-                                children_name = bd_to_model_skills[skill_id_to_names[children_id]]
-                                if children_name in used:
-                                    continue
-                                used.add(children_name)
-                                children_check[children_name] = cols[col_index].checkbox(children_name)
+                try:
+                    parent_check[name] = cols[col_index].checkbox(name)
+                    parent_name = name
+                    if parent_check[parent_name]:
+                        bd_parent_name = parent_name.replace(' ' + parent_name.split()[-1], '')
+                        if names_to_skill_id[bd_parent_name] in parents_to_children and parents_to_children[names_to_skill_id[bd_parent_name]]:
+                            # st.write(parent_name)
+                            for children_id in parents_to_children[names_to_skill_id[bd_parent_name]]:
+                                if skill_id_to_names[children_id] in bd_to_model_skills and not bd_to_model_skills[skill_id_to_names[children_id]] in parents_to_children:
+                                    children_name = bd_to_model_skills[skill_id_to_names[children_id]]
+                                    if children_name in used:
+                                        continue
+                                    used.add(children_name)
+                                    try:
+                                        children_check[children_name] = cols[col_index].checkbox(children_name)
+                                    except:
+                                        pass
+                except:
+                    pass
                             
 
     
