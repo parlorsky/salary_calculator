@@ -136,7 +136,7 @@ for group_choice in arr:
                     if parents_to_children[names_to_skill_id[bd_parent_name]]:
                         # st.write(parent_name)
                         for children_id in parents_to_children[names_to_skill_id[bd_parent_name]]:
-                            st.text([children_id, children_id in skill_id_to_names])
+                            st.text([skill_id_to_names[children_id]])
                             children_name = bd_to_model_skills[skill_id_to_names[children_id]]
                             children_check[children_name] = cols[col_index].checkbox(children_name)
 
