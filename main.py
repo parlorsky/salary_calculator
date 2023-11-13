@@ -129,7 +129,7 @@ for group_choice in arr:
         for index, name in enumerate(available_skills):
             col_index = index % num_cols
             if names_to_skill_id[name.replace(' ' + name.split()[-1], '')] in parents_to_children:
-                parent_check[name] = cols[col_index].checkbox(name)
+                parent_check[name] = cols[col_index].checkbox(name, key=index)
                 parent_name = name
                 if parent_check[parent_name]:
                     bd_parent_name = parent_name.replace(' ' + parent_name.split()[-1], '')
@@ -138,7 +138,7 @@ for group_choice in arr:
                         for children_id in parents_to_children[names_to_skill_id[bd_parent_name]]:
                             if skill_id_to_names[children_id] in bd_to_model_skills:
                                 children_name = bd_to_model_skills[skill_id_to_names[children_id]]
-                                children_check[children_name] = cols[col_index].checkbox(children_name)
+                                children_check[children_name] = cols[col_index].checkbox(children_name, key=-index)
 
     
 
