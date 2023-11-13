@@ -129,8 +129,11 @@ for group_choice in arr:
         for index, name in enumerate(available_skills):
             col_index = int(index > len(available_skills) // 2)
             if names_to_skill_id[name.replace(' ' + name.split()[-1], '')] in parents_to_children:
-                parent_check[name] = cols[col_index].checkbox(name)
-                parent_name = name
+                try:
+                    parent_check[name] = cols[col_index].checkbox(name)
+                    parent_name = name
+                except:
+                    continue
                 if parent_check[parent_name]:
                     bd_parent_name = parent_name.replace(' ' + parent_name.split()[-1], '')
                     if names_to_skill_id[bd_parent_name] in parents_to_children and parents_to_children[names_to_skill_id[bd_parent_name]]:
