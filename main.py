@@ -144,7 +144,7 @@ for group_choice in arr:
                                 if children_name in used:
                                     continue
                                 used.add(children_name)
-                                cols[col_index].write(['1231', children_name, used])
+                                # cols[col_index].write(['1231', children_name, used])
                                 children_check[children_name] = cols[col_index].checkbox(children_name)
                             
 
