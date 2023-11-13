@@ -102,27 +102,30 @@ for skill_name in skills_all:
         
     
 #['year', 'is_vahta', 'experience_id', 'region_name', 'industry_group', 'is_parttime',
-with left_column1:
 
-    experience = st.radio(
-        'Опыт работы:',
-        [0,1,2])
 
-    # st.subheader(model.feature_names_)
-    parent_check = {}
-    children_check = {}
-    st.subheader("Выберите виды навыков.")
-    arr = st.multiselect('Виды:', skill_groups)
-    skills_all = model.feature_names_[6:]
-    if arr:
-        st.subheader("Выберите вид СПК.")
-        arr_spk = st.multiselect('СПК:', list(spk_distr.keys()))
-    x = 1 + 1
+experience = st.radio(
+    'Опыт работы:',
+    [0,1,2])
 
-    for group_choice in arr:
-        for spk in arr_spk:
-            available_skills = set(groups_distr[group_choice]) & set(spk_distr[spk])
-            for name in available_skills:
+# st.subheader(model.feature_names_)
+num_cols = 2
+cols = st.columns(num_cols)
+parent_check = {}
+children_check = {}
+cols[0].subheader("Выберите виды навыков.")
+arr = st.multiselect('Виды:', skill_groups)
+skills_all = model.feature_names_[6:]
+if arr:
+    st.subheader("Выберите вид СПК.")
+    arr_spk = cols[1].multiselect('СПК:', list(spk_distr.keys()))
+
+for group_choice in arr:
+    for spk in arr_spk:
+        available_skills = set(groups_distr[group_choice]) & set(spk_distr[spk])
+        for index, name in enumerate(available_skills):
+            col_index = index % num_cols
+            with cols[col_index]:
                 if names_to_skill_id[name.replace(' ' + name.split()[-1], '')] in parents_to_children:
                     parent_check[name] = st.checkbox(name)
                     parent_name = name
