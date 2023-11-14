@@ -94,7 +94,7 @@ for skill in skills_all:
     else:
         groups_distr['Другие'].append(skill)
 
-spk_to_names = pd.read_csv('nark_spk_20231010.csv')
+spk_to_names = pd.read_csv('nark_spk_20231010.csv') #перевод из id в name
 spk_to_names = dict(zip(spk_to_names['id'], spk_to_names['name']))
 
 spk_distr = {}
