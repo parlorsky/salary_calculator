@@ -115,6 +115,7 @@ experience = st.radio(
     [0,1,2])
 
 # st.subheader(model.feature_names_)
+st.write(spk_distr)
 num_cols = 2
 cols = st.columns(num_cols)
 parent_check = {}
@@ -124,7 +125,6 @@ arr = cols[0].multiselect('Виды:', skill_groups)
 skills_all = model.feature_names_[6:]
 cols[1].subheader("Выберите вид СПК.")
 arr_spk = cols[1].multiselect('СПК:', list(spk_distr.keys()))
-st.write(spk_distr)
 used = set()
 for group_choice in arr:
     for spk in arr_spk:
