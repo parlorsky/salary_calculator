@@ -81,7 +81,7 @@ skills_all = model.feature_names_[6:]
 bd_to_model_skills = {' '.join(model_skill.split()[:-1]): model_skill for model_skill in skills_all}
 
 
-st.subheader("Выберите опыт работы")
+st.sidebar.subheader("Выберите опыт работы")
 left_column1, right_column1 = st.columns([1, 1.2])
 
 skill_groups = ['(СК)', '(ЯС)', 'ППКСУП', 'СПК', '(ИС)', '(УТУТ)', '(ОПТ)', 'Другие']
