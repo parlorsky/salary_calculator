@@ -118,7 +118,7 @@ experience = st.sidebar.radio(
 x = 1 + 1
 # st.subheader(model.feature_names_)
 num_cols = 2
-cols = st.columns([1, 1])
+cols = st.columns([1, 2])
 parent_check = {}
 children_check = {}
 cols[0].subheader("Выберите виды навыков.")
