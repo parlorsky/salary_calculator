@@ -42,7 +42,7 @@ vahta = 1 if st.sidebar.checkbox('Вахта') else 0
 is_parttime = 1 if st.sidebar.checkbox('Неполная занятость') else 0
 
 
-st.sidebar.header(f"Оценка стоимости навыков {inp_species}")
+st.header(f"Оценка стоимости навыков {inp_species}")
 
 st.sidebar.subheader("Выберите регион вакансии")
 region = st.sidebar.selectbox(
