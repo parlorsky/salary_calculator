@@ -107,6 +107,7 @@ for skill_name in skills_all:
         spk_distr[spk_name] = []
     spk_distr[spk_name].append(skill_name)
 
+st.write(spk_distr)
 x = 1 + 1
     
 #['year', 'is_vahta', 'experience_id', 'region_name', 'industry_group', 'is_parttime',
