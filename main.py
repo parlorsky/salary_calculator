@@ -38,8 +38,8 @@ prof_id = professions[inp_species]
 model = cb.CatBoostRegressor()
 model = model.load_model(f"model/{prof_id}.cbm")
 
-vahta = 1 if st.checkbox('Вахта') else 0
-is_parttime = 1 if st.checkbox('Неполная занятость') else 0
+vahta = 1 if st.sidebar.checkbox('Вахта') else 0
+is_parttime = 1 if st.sidebar.checkbox('Неполная занятость') else 0
 
 
 st.header(f"Оценка стоимости навыков {inp_species}")
@@ -119,11 +119,11 @@ num_cols = 2
 cols = st.columns(num_cols)
 parent_check = {}
 children_check = {}
-st.sidebar.subheader("Выберите виды навыков.")
-arr = st.sidebar.multiselect('Виды:', skill_groups)
+cols[0].sidebar.subheader("Выберите виды навыков.")
+arr = cols[0].multiselect('Виды:', skill_groups)
 skills_all = model.feature_names_[6:]
-st.sidebar.subheader("Выберите вид СПК.")
-arr_spk = st.sidebar.multiselect('СПК:', list(spk_distr.keys()))
+cols[1].subheader("Выберите вид СПК.")
+arr_spk = cols[1].sidebar.multiselect('СПК:', list(spk_distr.keys()))
 used = set()
 
 for group_choice in arr:
