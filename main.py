@@ -118,14 +118,14 @@ experience = st.sidebar.radio(
 x = 1 + 1
 # st.subheader(model.feature_names_)
 num_cols = 2
-cols = st.columns([1, 2])
+cols = st.columns([1, 1])
 parent_check = {}
 children_check = {}
 cols[0].subheader("Выберите виды навыков.")
 arr = cols[0].multiselect('Виды:', skill_groups)
 skills_all = model.feature_names_[6:]
 cols[1].subheader("Выберите вид СПК.")
-arr_spk = cols[1].sidebar.multiselect('СПК:', list(spk_distr.keys()))
+arr_spk = cols[1].multiselect('СПК:', list(spk_distr.keys()))
 used = set()
 
 for group_choice in arr:
