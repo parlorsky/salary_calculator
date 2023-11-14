@@ -44,8 +44,8 @@ is_parttime = 1 if st.checkbox('Неполная занятость') else 0
 
 st.header(f"Оценка стоимости навыков {inp_species}")
 
-st.subheader("Выберите регион вакансии")
-region = st.selectbox(
+st.sidebar.subheader("Выберите регион вакансии")
+region = st.sidebar.selectbox(
     'Напишите регион вакансии',
     (regions_list))
 
@@ -110,7 +110,7 @@ for skill_name in skills_all:
 #['year', 'is_vahta', 'experience_id', 'region_name', 'industry_group', 'is_parttime',
 
 
-experience = st.radio(
+experience = st.sidebar.radio(
     'Опыт работы:',
     [0,1,2])
 
