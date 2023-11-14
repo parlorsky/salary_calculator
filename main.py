@@ -94,16 +94,20 @@ for skill in skills_all:
     else:
         groups_distr['Другие'].append(skill)
 
+spk_to_names = pd.read_csv('nark_spk_20231010.csv')
+spk_to_names = dict(zip(spk_to_names['id'], spk_to_names['name']))
+
 spk_distr = {}
 for skill_name in skills_all:
     spk_i = skill_name.split()[-1].split('_')[1][:-1]
+    spk_name = spk_to_names.get(int(spk_i), spk_i)
     if not spk_i.isdigit():
         continue
-    if not spk_i in spk_distr:
-        spk_distr[spk_i] = []
-    spk_distr[spk_i].append(skill_name)
+    if not spk_name in spk_distr:
+        spk_distr[spk_name] = []
+    spk_distr[spk_name].append(skill_name)
 
-        
+x = 1 + 1
     
 #['year', 'is_vahta', 'experience_id', 'region_name', 'industry_group', 'is_parttime',
 
