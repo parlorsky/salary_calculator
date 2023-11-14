@@ -106,9 +106,6 @@ for skill_name in skills_all:
     if not spk_name in spk_distr:
         spk_distr[spk_name] = []
     spk_distr[spk_name].append(skill_name)
-
-st.write(spk_distr)
-x = 1 + 1
     
 #['year', 'is_vahta', 'experience_id', 'region_name', 'industry_group', 'is_parttime',
 
@@ -127,6 +124,7 @@ arr = cols[0].multiselect('Виды:', skill_groups)
 skills_all = model.feature_names_[6:]
 cols[1].subheader("Выберите вид СПК.")
 arr_spk = cols[1].multiselect('СПК:', list(spk_distr.keys()))
+cols[1].write(spk_distr)
 used = set()
 for group_choice in arr:
     for spk in arr_spk:
