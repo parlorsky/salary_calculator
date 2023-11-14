@@ -125,6 +125,7 @@ skills_all = model.feature_names_[6:]
 cols[1].subheader("Выберите вид СПК.")
 arr_spk = cols[1].multiselect('СПК:', list(spk_distr.keys()))
 used = set()
+
 for group_choice in arr:
     for spk in arr_spk:
         available_skills = set(groups_distr[group_choice]) & set(spk_distr[spk])
