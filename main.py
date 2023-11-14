@@ -115,6 +115,7 @@ experience = st.sidebar.radio(
     'Опыт работы:',
     [0,1,2])
 
+x = 1 + 1
 # st.subheader(model.feature_names_)
 num_cols = 2
 cols = st.columns(num_cols)
