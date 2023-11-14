@@ -82,7 +82,7 @@ bd_to_model_skills = {' '.join(model_skill.split()[:-1]): model_skill for model_
 
 
 st.sidebar.subheader("Выберите опыт работы")
-left_column1, right_column1 = st.columns([1, 1.2])
+# left_column1, right_column1 = st.columns([1, 1.2])
 
 skill_groups = ['(СК)', '(ЯС)', 'ППКСУП', 'СПК', '(ИС)', '(УТУТ)', '(ОПТ)', 'Другие']
 groups_distr = {group: [] for group in skill_groups}
@@ -119,7 +119,7 @@ num_cols = 2
 cols = st.columns(num_cols)
 parent_check = {}
 children_check = {}
-cols[0].sidebar.subheader("Выберите виды навыков.")
+cols[0].subheader("Выберите виды навыков.")
 arr = cols[0].multiselect('Виды:', skill_groups)
 skills_all = model.feature_names_[6:]
 cols[1].subheader("Выберите вид СПК.")
