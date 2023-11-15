@@ -139,9 +139,9 @@ used = set()
 group_set = set()
 spk_set = set()
 for group_choice in arr:
-    group_set.add(groups_distr[group_choice])
+    group_set |= set(groups_distr[group_choice])
 for spk in arr_spk:
-    spk_set.add(spk_distr[spk])
+    spk_set |= set(spk_distr[spk])
 
 available_skills = group_set & spk_set
 
