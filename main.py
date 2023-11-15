@@ -26,9 +26,11 @@ inp_species = st.sidebar.selectbox(
 
 
 regions_list = []
+# reg_list_view = []
 
 for i in range(regions.shape[0]):
     regions_list += [f'{regions["industry_group"].iloc[i]}_{regions["region_name"].iloc[i]}']
+    # reg_list_view += [f'{regions["region_name"].iloc[i]}']
 
 
 prof_id = professions[inp_species]
