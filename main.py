@@ -128,7 +128,7 @@ cols = st.columns([1, 1])
 parent_check = {}
 children_check = {}
 cols[0].subheader("Выберите виды навыков.")
-arr = cols[0].multiselect('Виды:', skill_groups)
+arr = cols[0].multiselect('Виды:', groups_distr.keys())
 skills_all = model.feature_names_[6:]
 cols[1].subheader("Выберите вид СПК.")
 arr_spk = cols[1].multiselect('СПК:', list(spk_distr.keys()))
