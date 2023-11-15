@@ -120,12 +120,12 @@ for skill_name in skills_all:
     
 #['year', 'is_vahta', 'experience_id', 'region_name', 'industry_group', 'is_parttime',
 
-
-experience = st.sidebar.radio(
+exp_vars = ['Нет опыта', 'От одного года до трёх лет', 'Более трёх лет опыта']
+experience_ans = st.sidebar.radio(
     'Опыт работы:',
-    [0,1,2])
+    exp_vars)
+experience = exp_vars.index(experience_ans)
 
-x = 1 + 1
 # st.subheader(model.feature_names_)
 num_cols = 2
 cols = st.columns([1, 1])
