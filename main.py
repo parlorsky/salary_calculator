@@ -127,17 +127,15 @@ experience_ans = st.sidebar.radio(
 experience = exp_vars.index(experience_ans)
 
 # st.subheader(model.feature_names_)
-num_cols = 2
-cols = st.columns([1, 1])
 parent_check = {}
 children_check = {}
-cols[0].subheader("Выберите виды навыков")
-arr = cols[0].multiselect('Виды:', groups_distr.keys())
+st.subheader("Выберите виды навыков")
+arr = st.multiselect('Виды:', groups_distr.keys())
 
 if arr:
     skills_all = model.feature_names_[6:]
-    cols[0].subheader("Выберите вид СПК")
-    arr_spk = cols[0].multiselect('СПК:', list(spk_distr.keys()))
+    st.subheader("Выберите вид СПК")
+    arr_spk = st.multiselect('СПК:', list(spk_distr.keys()))
     used = set()
 
     group_set = set()
@@ -147,6 +145,9 @@ if arr:
     for spk in arr_spk:
         spk_set |= set(spk_distr[spk])
 
+    num_cols = 2
+    cols = st.columns([1, 1])
+    
     available_skills = group_set & spk_set
     if available_skills:
 
@@ -188,5 +189,6 @@ if arr:
             st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
                 
     else:
-        st.subheader('К сожалению, нет доступных навыков. Попробуйте добавить ещё категорий.')
+        if arr_spk:
+            st.subheader('К сожалению, нет доступных навыков. Попробуйте добавить ещё категорий.')
     
