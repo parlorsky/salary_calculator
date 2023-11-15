@@ -40,7 +40,7 @@ prof_id = professions[inp_species]
 model = cb.CatBoostRegressor()
 model = model.load_model(f"model/{prof_id}.cbm")
 
-st.sidebar.subheader(f"Выберите вид занятости")
+st.sidebar.subheader(f"Выберите особый вид занятости (необязательно)")
 vahta = 1 if st.sidebar.checkbox('Вахта') else 0
 is_parttime = 1 if st.sidebar.checkbox('Неполная занятость') else 0
 
@@ -133,55 +133,60 @@ parent_check = {}
 children_check = {}
 cols[0].subheader("Выберите виды навыков.")
 arr = cols[0].multiselect('Виды:', groups_distr.keys())
-skills_all = model.feature_names_[6:]
-cols[1].subheader("Выберите вид СПК.")
-arr_spk = cols[1].multiselect('СПК:', list(spk_distr.keys()))
-used = set()
 
-group_set = set()
-spk_set = set()
-for group_choice in arr:
-    group_set |= set(groups_distr[group_choice])
-for spk in arr_spk:
-    spk_set |= set(spk_distr[spk])
+if arr:
+    skills_all = model.feature_names_[6:]
+    cols[0].subheader("Выберите вид СПК.")
+    arr_spk = cols[0].multiselect('СПК:', list(spk_distr.keys()))
+    used = set()
 
-available_skills = group_set & spk_set
+    group_set = set()
+    spk_set = set()
+    for group_choice in arr:
+        group_set |= set(groups_distr[group_choice])
+    for spk in arr_spk:
+        spk_set |= set(spk_distr[spk])
 
-for index, name in enumerate(available_skills):
-    col_index = int(index > len(available_skills) // 2)
-    if names_to_skill_id[name.replace(' ' + name.split()[-1], '')] in parents_to_children:
-        if name in used:
-            continue
-        used.add(name)
-        names_view = name.split('(')[0]
-        parent_check[name] = cols[col_index].checkbox(names_view)
-        parent_name = name
-        if parent_check[parent_name]:
-            bd_parent_name = parent_name.replace(' ' + parent_name.split()[-1], '')
-            if names_to_skill_id[bd_parent_name] in parents_to_children and parents_to_children[names_to_skill_id[bd_parent_name]]:
-                # st.write(parent_name)
-                for children_id in parents_to_children[names_to_skill_id[bd_parent_name]]:
-                    if skill_id_to_names[children_id] in bd_to_model_skills and not bd_to_model_skills[skill_id_to_names[children_id]] in parents_to_children:
-                        children_name = bd_to_model_skills[skill_id_to_names[children_id]]
-                        if children_name in used:
-                            continue
-                        used.add(children_name)
-                        names_view = children_name.split('(')[0]
-                        # cols[col_index].write(['1231', children_name, used])
-                        children_check[children_name] = cols[col_index].checkbox(names_view)
-                            
+    available_skills = group_set & spk_set
+    if available_skills:
 
-    
+        for index, name in enumerate(available_skills):
+            col_index = int(index > len(available_skills) // 2)
+            if names_to_skill_id[name.replace(' ' + name.split()[-1], '')] in parents_to_children:
+                if name in used:
+                    continue
+                used.add(name)
+                names_view = name.split('(')[0]
+                parent_check[name] = cols[col_index].checkbox(names_view)
+                parent_name = name
+                if parent_check[parent_name]:
+                    bd_parent_name = parent_name.replace(' ' + parent_name.split()[-1], '')
+                    if names_to_skill_id[bd_parent_name] in parents_to_children and parents_to_children[names_to_skill_id[bd_parent_name]]:
+                        # st.write(parent_name)
+                        for children_id in parents_to_children[names_to_skill_id[bd_parent_name]]:
+                            if skill_id_to_names[children_id] in bd_to_model_skills and not bd_to_model_skills[skill_id_to_names[children_id]] in parents_to_children:
+                                children_name = bd_to_model_skills[skill_id_to_names[children_id]]
+                                if children_name in used:
+                                    continue
+                                used.add(children_name)
+                                names_view = children_name.split('(')[0]
+                                # cols[col_index].write(['1231', children_name, used])
+                                children_check[children_name] = cols[col_index].checkbox(names_view)
+                                    
+
+            
 
 
 
 
-    # st.subheader("Выберите навыки для подсчета зарплаты по вакансии.")
-skills = [int(parent_check.get(name, 0) or  children_check.get(name, 0)) for name in model.feature_names_[6:]]
+            # st.subheader("Выберите навыки для подсчета зарплаты по вакансии.")
+        skills = [int(parent_check.get(name, 0) or  children_check.get(name, 0)) for name in model.feature_names_[6:]]
 
-if st.button('Рассчитать зарплату'):
-    prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
+        if st.button('Рассчитать зарплату'):
+            prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
 
-    st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
-        
+            st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
+                
+    else:
+        st.subheader('К сожалению, нет доступных навыков. Попробуйте добавить ещё категорий.')
     
