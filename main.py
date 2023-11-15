@@ -28,7 +28,7 @@ inp_species = st.sidebar.selectbox(
 regions_list = []
 
 for i in range(regions.shape[0]):
-    regions_list += [f'{regions["industry_group"].iloc[i]}_{regions["region_name"].iloc[i]}']
+    regions_list += [f'{regions["region_name"].iloc[i]}']
 
 prof_id = professions[inp_species]
 
@@ -84,12 +84,18 @@ bd_to_model_skills = {' '.join(model_skill.split()[:-1]): model_skill for model_
 st.sidebar.subheader("Выберите опыт работы")
 # left_column1, right_column1 = st.columns([1, 1.2])
 
-skill_groups = ['(СК)', '(ЯС)', 'ППКСУП', 'СПК', '(ИС)', '(УТУТ)', '(ОПТ)', 'Другие']
+skill_groups = ['(СК)', '(ЯС)', 'СПК', '(ИС)', '(УТУТ)', '(ОПТ)', 'Другие']
+group_decryption = {'(СК)': 'Личностные компетенции', '(ЯС)': 'Языки сквозные',
+                     'СПК': 'Совет по профессиональным квалификациям', '(ИС)': 'Инструменты сквозные',
+                     '(УТУТ)': 'Условия по трудоустройству, условия труда (универсальные требования)',
+                     '(ОПТ)': 'обобщённые профессиональные требования'}
+
 groups_distr = {group: [] for group in skill_groups}
 for skill in skills_all:
     for group in skill_groups:
         if group in skill:
-            groups_distr[group].append(skill)
+            group_view = group_decryption[group]
+            groups_distr[group_view].append(skill)
             break
     else:
         groups_distr['Другие'].append(skill)
@@ -136,7 +142,8 @@ for group_choice in arr:
                 if name in used:
                     continue
                 used.add(name)
-                parent_check[name] = cols[col_index].checkbox(name)
+                names_view = name.split('(')[0]
+                parent_check[name] = cols[col_index].checkbox(names_view)
                 parent_name = name
                 if parent_check[parent_name]:
                     bd_parent_name = parent_name.replace(' ' + parent_name.split()[-1], '')
@@ -148,8 +155,9 @@ for group_choice in arr:
                                 if children_name in used:
                                     continue
                                 used.add(children_name)
+                                names_view = children_name.split('(')[0]
                                 # cols[col_index].write(['1231', children_name, used])
-                                children_check[children_name] = cols[col_index].checkbox(children_name)
+                                children_check[children_name] = cols[col_index].checkbox(names_view)
                             
 
     
