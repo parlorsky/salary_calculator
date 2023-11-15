@@ -20,8 +20,7 @@ left_column, right_column = st.columns(2)
 exp_conv = {'Без опыта':'0', 'От 1 до 3 лет':'1','От 3 лет':'2'}
 exp_conv_reverse = {'0':'Без опыта', '1':'От 1 до 3 лет','2':'От 3 лет'}
 
-with left_column:
-    inp_species = st.selectbox(
+inp_species = st.sidebar.selectbox(
         'Наименование вакансии',
         np.unique(prof_list))
 
