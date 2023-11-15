@@ -158,6 +158,8 @@ if arr:
                     continue
                 used.add(name)
                 names_view = name.split('(')[0]
+                if not names_view:
+                    names_view = name
                 parent_check[name] = cols[col_index].checkbox(names_view)
                 parent_name = name
                 if parent_check[parent_name]:
