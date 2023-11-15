@@ -5,7 +5,10 @@ import streamlit as st
 # from catboost_install import install 
 import os
 import catboost as cb 
+import re
 
+
+PATTERN = r'\((\d+)'
 
 #
 
@@ -132,6 +135,7 @@ children_check = {}
 st.subheader("Выберите виды навыков")
 arr = st.multiselect('Виды:', groups_distr.keys())
 
+
 if arr:
     skills_all = model.feature_names_[6:]
     st.subheader("Выберите вид СПК")
@@ -157,9 +161,7 @@ if arr:
                 if name in used:
                     continue
                 used.add(name)
-                names_view = name.split('(')[0]
-                if not names_view:
-                    names_view = name
+                names_view = name[:re.search(PATTERN, name).start() - 1]
                 parent_check[name] = cols[col_index].checkbox(names_view)
                 parent_name = name
                 if parent_check[parent_name]:
@@ -172,7 +174,7 @@ if arr:
                                 if children_name in used:
                                     continue
                                 used.add(children_name)
-                                names_view = children_name.split('(')[0]
+                                names_view = children_name[:re.search(PATTERN, children_name).start() - 1]
                                 # cols[col_index].write(['1231', children_name, used])
                                 children_check[children_name] = cols[col_index].checkbox(names_view)
                                     
