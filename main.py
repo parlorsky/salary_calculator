@@ -136,31 +136,37 @@ cols[1].subheader("Выберите вид СПК.")
 arr_spk = cols[1].multiselect('СПК:', list(spk_distr.keys()))
 used = set()
 
+group_set = set()
+spk_set = set()
 for group_choice in arr:
-    for spk in arr_spk:
-        available_skills = set(groups_distr[group_choice]) & set(spk_distr[spk])
-        for index, name in enumerate(available_skills):
-            col_index = int(index > len(available_skills) // 2)
-            if names_to_skill_id[name.replace(' ' + name.split()[-1], '')] in parents_to_children:
-                if name in used:
-                    continue
-                used.add(name)
-                names_view = name.split('(')[0]
-                parent_check[name] = cols[col_index].checkbox(names_view)
-                parent_name = name
-                if parent_check[parent_name]:
-                    bd_parent_name = parent_name.replace(' ' + parent_name.split()[-1], '')
-                    if names_to_skill_id[bd_parent_name] in parents_to_children and parents_to_children[names_to_skill_id[bd_parent_name]]:
-                        # st.write(parent_name)
-                        for children_id in parents_to_children[names_to_skill_id[bd_parent_name]]:
-                            if skill_id_to_names[children_id] in bd_to_model_skills and not bd_to_model_skills[skill_id_to_names[children_id]] in parents_to_children:
-                                children_name = bd_to_model_skills[skill_id_to_names[children_id]]
-                                if children_name in used:
-                                    continue
-                                used.add(children_name)
-                                names_view = children_name.split('(')[0]
-                                # cols[col_index].write(['1231', children_name, used])
-                                children_check[children_name] = cols[col_index].checkbox(names_view)
+    group_set.add(groups_distr[group_choice])
+for spk in arr_spk:
+    spk_set.add(spk_distr[spk])
+
+available_skills = group_set & spk_set
+
+for index, name in enumerate(available_skills):
+    col_index = int(index > len(available_skills) // 2)
+    if names_to_skill_id[name.replace(' ' + name.split()[-1], '')] in parents_to_children:
+        if name in used:
+            continue
+        used.add(name)
+        names_view = name.split('(')[0]
+        parent_check[name] = cols[col_index].checkbox(names_view)
+        parent_name = name
+        if parent_check[parent_name]:
+            bd_parent_name = parent_name.replace(' ' + parent_name.split()[-1], '')
+            if names_to_skill_id[bd_parent_name] in parents_to_children and parents_to_children[names_to_skill_id[bd_parent_name]]:
+                # st.write(parent_name)
+                for children_id in parents_to_children[names_to_skill_id[bd_parent_name]]:
+                    if skill_id_to_names[children_id] in bd_to_model_skills and not bd_to_model_skills[skill_id_to_names[children_id]] in parents_to_children:
+                        children_name = bd_to_model_skills[skill_id_to_names[children_id]]
+                        if children_name in used:
+                            continue
+                        used.add(children_name)
+                        names_view = children_name.split('(')[0]
+                        # cols[col_index].write(['1231', children_name, used])
+                        children_check[children_name] = cols[col_index].checkbox(names_view)
                             
 
     
