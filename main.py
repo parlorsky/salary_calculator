@@ -217,6 +217,7 @@ if arr:
             st.subheader(f'{model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)}')
                 
     else:
+        x = 1 + 1
         if arr_spk:
             st.subheader('К сожалению, нет доступных навыков. Попробуйте добавить ещё категорий.')
     
