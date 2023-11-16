@@ -200,7 +200,10 @@ if arr:
 
             # st.subheader("Выберите навыки для подсчета зарплаты по вакансии.")
         skills = [int(parent_check.get(name, 0) or  children_check.get(name, 0)) for name in model.feature_names_[6:]]
-        skills_pciked = np.array(model.feature_names_[6:])[skills]
+        skills_pciked = np.array(model.feature_names_[6:])[[True if el else False for el in skills]]
+
+        st.subheader(f'{skills_pciked}')
+        st.subheader(f'{skills}')
 
 
         if st.button('Рассчитать зарплату'):
@@ -217,8 +220,6 @@ if arr:
             st.subheader(f'{get_stats_predict * len(skills_pciked) / len(skills)}, % - {perc}')
             st.subheader(f'{get_stats_predict}')
             st.subheader(f'{old_pred }')
-            st.subheader(f'{skills_pciked}')
-            st.subheader(f'{skills}')
 
                 
     else:
