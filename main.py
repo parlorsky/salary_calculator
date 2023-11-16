@@ -214,11 +214,11 @@ if arr:
             prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
             old_pred = prediction
             perc = (len(skills_pciked) / len(skills)) * 0.3 if get_stats_predict != 0 else 0
-            prediction = prediction * (1 - perc + 0.2) + perc * get_stats_predict
+            prediction = prediction * (1 - perc) + perc * get_stats_predict
 
             st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
             st.subheader(f'{old_pred }')
-            st.subheader(f'{get_stats_predict} - stats pred')
+            st.subheader(f'{get_stats_predict} - stats pred.')
 
                 
     else:
