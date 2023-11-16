@@ -209,16 +209,15 @@ if arr:
         if st.button('Рассчитать зарплату'):
             get_stats_predict = 0
             if skills_predict_stats.shape[0] != 0:
-                get_stats_predict = skills_predict_stats[skills_pciked].sum(axis=1).iloc[0]
+                get_stats_predict = skills_predict_stats[skills_pciked].max(axis=1).iloc[0]
 
             prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
             old_pred = prediction
-            perc = 0.3 + len(skills_pciked) / len(skills) if get_stats_predict != 0 else 0
-            prediction = prediction * (1 - perc) + perc * get_stats_predict
+            prediction = prediction + get_stats_predict
 
             st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
             st.subheader(f'{old_pred }')
-            st.subheader(f'{get_stats_predict} - stats pred.. {perc}')
+            st.subheader(f'{get_stats_predict} - stats pred..')
 
                 
     else:
