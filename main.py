@@ -136,6 +136,20 @@ st.subheader("Выберите виды навыков")
 arr = st.multiselect('Виды:', groups_distr.keys())
 
 
+skill_stats = pd.read_csv(f'skills_salary_stats/results_version1/{prof_id}.csv')
+skills_predict_stats = skill_stats[(skill_stats.is_vahta == True if vahta else False)
+                             & (skill_stats.is_parttime == True if is_parttime else False)
+                             & (skill_stats.experience_id == experience)
+                             & (skill_stats.region_name == region.split('_')[1]) 
+                             & (skill_stats.industry_group == industry_group)]
+if not skills_predict_stats:
+    skills_predict_stats = skill_stats[(skill_stats.is_vahta == False)
+                             & (skill_stats.is_parttime == False)
+                             & (skill_stats.experience_id == experience)
+                             & (skill_stats.region_name == region.split('_')[1]) 
+                             & (skill_stats.industry_group == industry_group)]
+
+
 if arr:
     skills_all = model.feature_names_[6:]
     st.subheader("Выберите вид СПК")
@@ -186,9 +200,16 @@ if arr:
 
             # st.subheader("Выберите навыки для подсчета зарплаты по вакансии.")
         skills = [int(parent_check.get(name, 0) or  children_check.get(name, 0)) for name in model.feature_names_[6:]]
+        skills_pciked = np.array(model.feature_names_[6:])[skills]
+
 
         if st.button('Рассчитать зарплату'):
+            get_stats_predict = 0
+            if skills_predict_stats:
+                get_stats_predict = skills_predict_stats[skills_pciked].sum(axis=1).iloc[0]
+
             prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
+            prediction = prediction + min(prediction * 0.22, get_stats_predict * 0.66)
 
             st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
                 
