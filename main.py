@@ -209,10 +209,10 @@ if arr:
                 get_stats_predict = skills_predict_stats[skills_pciked].sum(axis=1).iloc[0]
 
             prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
-            prediction = prediction + min(prediction * 0.22, get_stats_predict * 0.66)
+            prediction = prediction + min(prediction * 0.22, get_stats_predict * len(skills_pciked) / len(skills))
 
             st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
-            st.subheader(f'{get_stats_predict}')
+            st.subheader(f'{get_stats_predict * len(skills_pciked) / len(skills)}, % - {len(skills_pciked) / len(skills)}')
             st.subheader(f'{model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)}')
                 
     else:
