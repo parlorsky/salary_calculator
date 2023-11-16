@@ -141,13 +141,13 @@ skills_predict_stats = skill_stats[(skill_stats.is_vahta == True if vahta else F
                              & (skill_stats.is_parttime == True if is_parttime else False)
                              & (skill_stats.experience_id == experience)
                              & (skill_stats.region_name == region.split('_')[1]) 
-                             & (skill_stats.industry_group == industry_group)]
+                             & (skill_stats.industry_group == int(industry_group))]
 if skills_predict_stats.shape[0] == 0:
     skills_predict_stats = skill_stats[(skill_stats.is_vahta == False)
                              & (skill_stats.is_parttime == False)
                              & (skill_stats.experience_id == experience)
                              & (skill_stats.region_name == region.split('_')[1]) 
-                             & (skill_stats.industry_group == industry_group)]
+                             & (skill_stats.industry_group == int(industry_group))]
 
 
 if arr:
