@@ -213,7 +213,7 @@ if arr:
 
             st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
             st.subheader(f'{get_stats_predict * len(skills_pciked) / len(skills)}, % - {len(skills_pciked) / len(skills)}')
-            st.subheader(f'{get_stats_predict})
+            st.subheader(f'{get_stats_predict}')
             st.subheader(f'{model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)}')
                 
     else:
