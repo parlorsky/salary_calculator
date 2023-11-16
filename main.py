@@ -218,7 +218,7 @@ if arr:
 
             st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
             st.subheader(f'{old_pred }')
-            st.subheader(f'{get_stats_predict} - stats pred.')
+            st.subheader(f'{get_stats_predict} - stats pred..')
 
                 
     else:
