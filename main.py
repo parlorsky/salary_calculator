@@ -212,7 +212,7 @@ if arr:
             prediction = prediction + min(prediction * 0.22, get_stats_predict * len(skills_pciked) / len(skills))
 
             st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
-            st.subheader(f'{get_stats_predict * len(skills_pciked) / len(skills)}, % - {len(skills_pciked) / len(model.feature_names_[6:])}')
+            st.subheader(f'{get_stats_predict * len(skills_pciked) / len(skills)}, % - {(skills_pciked).shape[0] / (model.feature_names_[6:]).shape[0]}')
             st.subheader(f'{get_stats_predict}')
             st.subheader(f'{model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)}')
                 
