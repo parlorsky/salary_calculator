@@ -14,7 +14,9 @@ if 'prev_zp' not in st.session_state:
     st.session_state['prev_zp'] = '0'
     # st.session_state['cur_zp'] = '0'
 
-
+def change_prev_zp(zp):
+    st.session_state['prev_zp'] = zp
+    
 regions = pd.read_csv('regions.csv')
 # data = json.load(open('values.json'))
 professions = json.load(open('professions.json'))
@@ -139,8 +141,7 @@ st.subheader("Выберите виды навыков")
 arr = st.multiselect('Виды:', groups_distr.keys())
 
 
-def change_prev_zp(zp):
-    st.session_state['prev_zp'] = zp
+
 
 
 skill_stats = pd.read_csv(f'skills_salary_stats/results_version1/{prof_id}.csv')
@@ -225,11 +226,12 @@ if arr:
                     st.session_state['prev_zp'] = str(prediction)
                     # st.session_state['cur_zp'] = str(prediction)
             else:
-                    st.subheader(f"prev_zp: {st.session_state['prev_zp']}, {prediction} + abs({prediction} - {float(st.session_state['prev_zp'])}")
+                    st.subheader(f"BEFORE:   prev_zp: {st.session_state['prev_zp']}    predict: {prediction}")
                     prediction = prediction + abs(prediction - float(st.session_state['prev_zp']))
                     # st.session_state['prev_zp'] = str(prediction)
                     change_prev_zp(str(prediction))
-
+                    st.subheader(f"AFTER:   prev_zp: {st.session_state['prev_zp']}    predict: {prediction}")
+            
             st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
             # st.subheader(f'{old_pred }')
             # st.subheader(f'{get_stats_predict} - stats pred..')
