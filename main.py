@@ -213,7 +213,7 @@ if arr:
         # st.subheader(f'{skills}')
 
 
-        if st.button('Рассчитать зарплату', toggle = ):
+        if st.button('Рассчитать зарплату'):
             get_stats_predict = 0
             if skills_predict_stats.shape[0] != 0:
                 get_stats_predict = skills_predict_stats[skills_pciked].sum(axis=1).iloc[0]
