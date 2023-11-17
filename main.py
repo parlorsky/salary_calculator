@@ -10,8 +10,15 @@ import re
 
 PATTERN = r'\((\d+)'
 
+def set_zp_null():
+    st.session_state['prev_zp'] = '0'
+
+
 if 'prev_zp' not in st.session_state:
     st.session_state['prev_zp'] = '0'
+
+if 'set_processes' not in st.session_state:
+    st.session_state['set_processes'] = set()
     # st.session_state['cur_zp'] = '0'
 
 def change_prev_zp(zp):
@@ -28,9 +35,9 @@ left_column, right_column = st.columns(2)
 exp_conv = {'Без опыта':'0', 'От 1 до 3 лет':'1','От 3 лет':'2'}
 exp_conv_reverse = {'0':'Без опыта', '1':'От 1 до 3 лет','2':'От 3 лет'}
 
-inp_species = st.sidebar.selectbox(
+inp_species = st.sidebar.selectbox( 
         'Наименование вакансии',
-        np.unique(prof_list))
+        np.unique(prof_list), on_change=set_zp_null)
 
 
 regions_list = []
@@ -48,9 +55,10 @@ prof_id = professions[inp_species]
 model = cb.CatBoostRegressor()
 model = model.load_model(f"model/{prof_id}.cbm")
 
+st.subheader('Проверка ')
 st.sidebar.subheader(f"Выберите особый вид занятости (необязательно)")
-vahta = 1 if st.sidebar.checkbox('Вахта') else 0
-is_parttime = 1 if st.sidebar.checkbox('Неполная занятость') else 0
+vahta = 1 if st.sidebar.checkbox('Вахта', on_change=set_zp_null) else 0
+is_parttime = 1 if st.sidebar.checkbox('Неполная занятость', on_change=set_zp_null) else 0
 
 
 st.header(f"Оценка стоимости навыков {inp_species}")
@@ -58,7 +66,7 @@ st.header(f"Оценка стоимости навыков {inp_species}")
 st.sidebar.subheader("Выберите регион вакансии")
 region = st.sidebar.selectbox(
     'Напишите регион вакансии',
-    (regions_list))
+    (regions_list), on_change=set_zp_null)
 
 industry_group = str(regions[regions['region_name'] == region.split('_')[1]]['industry_group'].iloc[0])
 
@@ -131,7 +139,8 @@ for skill_name in skills_all:
 exp_vars = ['Нет опыта', 'От одного года до трёх лет', 'Более трёх лет опыта']
 experience_ans = st.sidebar.radio(
     'Опыт работы:',
-    exp_vars)
+    exp_vars, on_change=set_zp_null)
+
 experience = exp_vars.index(experience_ans)
 
 # st.subheader(model.feature_names_)
