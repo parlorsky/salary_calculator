@@ -2,13 +2,15 @@ import pandas as pd
 import json
 import numpy as np
 import streamlit as st
+# from catboost_install import install 
 import os
 import catboost as cb 
 
 
+#
 
 regions = pd.read_csv('regions.csv')
-
+# data = json.load(open('values.json'))
 professions = json.load(open('professions.json'))
 
 prof_list = list(professions.keys())
@@ -39,6 +41,7 @@ is_parttime = 1 if st.checkbox('Неполная занятость') else 0
 
 
 st.header(f"Оценка стоимости навыков {inp_species}")
+
 st.subheader("Выберите регион вакансии")
 region = st.selectbox(
     'Напишите регион вакансии',
@@ -51,9 +54,6 @@ industry_group = str(regions[regions['region_name'] == region.split('_')[1]]['in
 st.subheader("Выберите опыт работы")
 left_column1, right_column1 = st.columns(2)
 
-prediction = 0
-predicts_pool = []
-skills_pool = []
 #['year', 'is_vahta', 'experience_id', 'region_name', 'industry_group', 'is_parttime',
 with left_column1:
 
@@ -70,19 +70,7 @@ with left_column1:
 
     
     if st.button('Рассчитать зарплату'):
-        if prediction:                    
-            if np.abs(sum(np.array(skills) - np.array(skills_pool[0]))):
-                prediction = predicts_pool[0] + abs(model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills) - predicts_pool[0])
-                predicts_pool[0] = prediction
-            else:
-                prediction = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
-                predicts_pool = []
-                skills_pool = []
-                
-        else:
-            prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
-            skills_pool += [skills]
-            predicts_pool += [prediction]
-            
-        st.write(f"ЗП: {round(prediction,2)}")
+        prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
+
+        st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
     
