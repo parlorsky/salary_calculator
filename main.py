@@ -220,12 +220,12 @@ if arr:
 
             prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
             old_pred = prediction
-            st.subheader(f"prev_zp {st.session_state['prev_zp']}")
+            # st.subheader(f"prev_zp {st.session_state['prev_zp']}")
             if st.session_state['prev_zp'] == '0':
                     st.session_state['prev_zp'] = str(prediction)
                     # st.session_state['cur_zp'] = str(prediction)
             else:
-                    st.subheader(f"prev_zp: {st.session_state['prev_zp']}")
+                    st.subheader(f"prev_zp: {st.session_state['prev_zp']}, {prediction} + abs({prediction} - {float(st.session_state['prev_zp']}")
                     prediction = prediction + abs(prediction - float(st.session_state['prev_zp']))
                     # st.session_state['prev_zp'] = str(prediction)
                     change_prev_zp(str(prediction))
