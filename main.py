@@ -17,9 +17,6 @@ def set_zp_null():
 if 'prev_zp' not in st.session_state:
     st.session_state['prev_zp'] = '0'
 
-if 'set_processes' not in st.session_state:
-    st.session_state['set_processes'] = set()
-    # st.session_state['cur_zp'] = '0'
 
 def change_prev_zp(zp):
     st.session_state['prev_zp'] = zp
