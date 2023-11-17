@@ -227,11 +227,11 @@ if arr:
                     # st.session_state['cur_zp'] = str(prediction)
             else:
                     st.subheader(f"BEFORE:   prev_zp: {st.session_state['prev_zp']}    predict: {prediction}")
-                    prediction = prediction + abs(prediction - float(st.session_state['prev_zp']))
+                    prediction = st.session_state['prev_zp'] + abs(prediction - float(st.session_state['prev_zp']))
                     # st.session_state['prev_zp'] = str(prediction)
                     change_prev_zp(str(prediction))
                     st.subheader(f"AFTER:   prev_zp: {st.session_state['prev_zp']}    predict: {prediction}")
-            change_prev_zp(str(prediction))
+            # change_prev_zp(str(prediction))
             st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
             st.write(st.session_state)
 
