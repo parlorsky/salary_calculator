@@ -216,13 +216,13 @@ if arr:
 
             prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
             old_pred = prediction
-            st.subheader(st.session_state['prev_zp'],st.session_state['cur_zp'])
+            st.subheader(f"prev_zp {st.session_state['prev_zp']} cur_zp {st.session_state['cur_zp']}")
             if st.session_state['prev_zp'] == '0':
                     st.session_state['prev_zp'] = str(prediction)
                     st.session_state['cur_zp'] = str(prediction)
             else:
-                    st.subheader('prev_zp: ', st.session_state['prev_zp'],'cur_zp: ', st.session_state['cur_zp'])
-                    st.subheader('pred - prev_zp: ',prediction - float(st.session_state['prev_zp']))
+                    st.subheader(f"prev_zp: {st.session_state['prev_zp']} cur_zp:  {st.session_state['cur_zp']}")
+                    st.subheader(f"pred - prev_zp: {prediction - float(st.session_state['prev_zp'])}")
                 
             st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
             st.subheader(f'{old_pred }')
