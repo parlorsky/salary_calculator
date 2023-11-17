@@ -10,7 +10,10 @@ import re
 
 PATTERN = r'\((\d+)'
 
-#
+if 'prev_zp' not in st.session_state:
+    st.session_state['prev_zp'] = 0
+    st.session_state['cur_zp'] = 0
+
 
 regions = pd.read_csv('regions.csv')
 # data = json.load(open('values.json'))
@@ -213,7 +216,14 @@ if arr:
 
             prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
             old_pred = prediction
-
+            st.subheader(st.session_state['prev_zp'],st.session_state['cur_zp'])
+            if st.session_state['prev_zp'] == 0:
+                    st.session_state['prev_zp'] = prediction
+                    st.session_state['cur_zp'] = prediction
+            else:
+                    st.subheader(st.session_state['prev_zp'],st.session_state['cur_zp'])
+                    st.subheader(prediction - st.session_state['prev_zp'])
+                
             st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
             st.subheader(f'{old_pred }')
             st.subheader(f'{get_stats_predict} - stats pred..')
