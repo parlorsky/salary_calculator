@@ -233,6 +233,8 @@ if arr:
                     st.subheader(f"AFTER:   prev_zp: {st.session_state['prev_zp']}    predict: {prediction}")
             
             st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
+            st.write(st.session_state)
+
             # st.subheader(f'{old_pred }')
             # st.subheader(f'{get_stats_predict} - stats pred..')
 
