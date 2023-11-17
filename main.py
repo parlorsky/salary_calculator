@@ -221,8 +221,8 @@ if arr:
                     st.session_state['prev_zp'] = str(prediction)
                     st.session_state['cur_zp'] = str(prediction)
             else:
-                    st.subheader(st.session_state['prev_zp'],st.session_state['cur_zp'])
-                    st.subheader(prediction - float(st.session_state['prev_zp']))
+                    st.subheader('prev_zp: ', st.session_state['prev_zp'],'cur_zp: ', st.session_state['cur_zp'])
+                    st.subheader('pred - prev_zp: ',prediction - float(st.session_state['prev_zp']))
                 
             st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
             st.subheader(f'{old_pred }')
