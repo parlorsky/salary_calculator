@@ -139,6 +139,10 @@ st.subheader("Выберите виды навыков")
 arr = st.multiselect('Виды:', groups_distr.keys())
 
 
+def change_prev_zp(zp):
+    st.session_state['prev_zp'] = zp
+
+
 skill_stats = pd.read_csv(f'skills_salary_stats/results_version1/{prof_id}.csv')
 skills_predict_stats = skill_stats[(skill_stats.is_vahta == True if vahta else False)
                              & (skill_stats.is_parttime == True if is_parttime else False)
@@ -209,7 +213,7 @@ if arr:
         # st.subheader(f'{skills}')
 
 
-        if st.button('Рассчитать зарплату'):
+        if st.button('Рассчитать зарплату', toggle = ):
             get_stats_predict = 0
             if skills_predict_stats.shape[0] != 0:
                 get_stats_predict = skills_predict_stats[skills_pciked].sum(axis=1).iloc[0]
@@ -223,8 +227,9 @@ if arr:
             else:
                     st.subheader(f"prev_zp: {st.session_state['prev_zp']}")
                     prediction = prediction + abs(prediction - float(st.session_state['prev_zp']))
-                    st.session_state['prev_zp'] = str(prediction)
-            
+                    # st.session_state['prev_zp'] = str(prediction)
+                    change_prev_zp(str(prediction))
+
             st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
             # st.subheader(f'{old_pred }')
             # st.subheader(f'{get_stats_predict} - stats pred..')
