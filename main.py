@@ -146,8 +146,7 @@ children_check = {}
 st.subheader("Выберите виды навыков")
 arr = st.multiselect('Виды:', groups_distr.keys())
 
-
-
+js = json.load(open(f'jsones_skill_salary/{prof_id}.json'))
 
 
 skill_stats = pd.read_csv(f'skills_salary_stats/results_version1/{prof_id}.csv')
@@ -221,25 +220,27 @@ if arr:
 
 
         if st.button('Рассчитать зарплату'):
-            get_stats_predict = 0
-            if skills_predict_stats.shape[0] != 0:
-                get_stats_predict = skills_predict_stats[skills_pciked].sum(axis=1).iloc[0]
+            # get_stats_predict = 0
+            # if skills_predict_stats.shape[0] != 0:
+            #     get_stats_predict = skills_predict_stats[skills_pciked].sum(axis=1).iloc[0]
 
-            prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
-            old_pred = prediction
-            # st.subheader(f"prev_zp {st.session_state['prev_zp']}")
-            if st.session_state['prev_zp'] == '0':
-                    st.session_state['prev_zp'] = str(prediction)
-                    # st.session_state['cur_zp'] = str(prediction)
-            else:
-                    st.subheader(f"BEFORE lala:   prev_zp: {st.session_state['prev_zp']}  predict: {prediction}")
-                    prediction = float(st.session_state['prev_zp']) + abs(prediction - float(st.session_state['prev_zp']))
-                    # st.session_state['prev_zp'] = str(prediction)
-                    change_prev_zp(str(prediction))
-                    st.subheader(f"AFTER:   prev_zp: {st.session_state['prev_zp']} predict: {prediction}")
+            # prediction  = model.predict([2021,vahta,experience,region,industry_group,is_parttime]+skills)
+            # old_pred = prediction
+            # # st.subheader(f"prev_zp {st.session_state['prev_zp']}")
+            # if st.session_state['prev_zp'] == '0':
+            #         st.session_state['prev_zp'] = str(prediction)
+            #         # st.session_state['cur_zp'] = str(prediction)
+            # else:
+            #         st.subheader(f"BEFORE lala:   prev_zp: {st.session_state['prev_zp']}  predict: {prediction}")
+            #         prediction = float(st.session_state['prev_zp']) + abs(prediction - float(st.session_state['prev_zp']))
+            #         # st.session_state['prev_zp'] = str(prediction)
+            #         change_prev_zp(str(prediction))
+            #         st.subheader(f"AFTER:   prev_zp: {st.session_state['prev_zp']} predict: {prediction}")
+
+            prediction = js[str(experience)][str(vahta)][str(industry_group)][str(is_parttime)]['base']
             # change_prev_zp(str(prediction))
             st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
-            st.write(st.session_state)
+            # st.write(st.session_state)
 
             # st.subheader(f'{old_pred }')
             # st.subheader(f'{get_stats_predict} - stats pred..')
