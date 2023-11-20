@@ -146,7 +146,7 @@ children_check = {}
 st.subheader("Выберите виды навыков")
 arr = st.multiselect('Виды:', groups_distr.keys())
 
-js = json.load(open(f'jsones_skill_salary/{prof_id}.json'))
+js = dict(json.load(open(f'jsones_skill_salary/{prof_id}.json')))
 
 
 # skill_stats = pd.read_csv(f'skills_salary_stats/results_version1/{prof_id}.csv')
