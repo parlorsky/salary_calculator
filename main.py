@@ -52,7 +52,7 @@ prof_id = professions[inp_species]
 model = cb.CatBoostRegressor()
 model = model.load_model(f"model/{prof_id}.cbm")
 
-st.subheader('Проверка ')
+# st.subheader('Проверка ')
 st.sidebar.subheader(f"Выберите особый вид занятости (необязательно)")
 vahta = 1 if st.sidebar.checkbox('Вахта', on_change=set_zp_null) else 0
 is_parttime = 1 if st.sidebar.checkbox('Неполная занятость', on_change=set_zp_null) else 0
