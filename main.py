@@ -149,18 +149,18 @@ arr = st.multiselect('Виды:', groups_distr.keys())
 js = json.load(open(f'jsones_skill_salary/{prof_id}.json'))
 
 
-skill_stats = pd.read_csv(f'skills_salary_stats/results_version1/{prof_id}.csv')
-skills_predict_stats = skill_stats[(skill_stats.is_vahta == True if vahta else False)
-                             & (skill_stats.is_parttime == True if is_parttime else False)
-                             & (skill_stats.experience_id == experience)
-                             & (skill_stats.region_name == region.split('_')[1]) 
-                             & (skill_stats.industry_group == int(industry_group))]
-if skills_predict_stats.shape[0] == 0:
-    skills_predict_stats = skill_stats[(skill_stats.is_vahta == False)
-                             & (skill_stats.is_parttime == False)
-                             & (skill_stats.experience_id == experience)
-                             & (skill_stats.region_name == region.split('_')[1]) 
-                             & (skill_stats.industry_group == int(industry_group))]
+# skill_stats = pd.read_csv(f'skills_salary_stats/results_version1/{prof_id}.csv')
+# skills_predict_stats = skill_stats[(skill_stats.is_vahta == True if vahta else False)
+#                              & (skill_stats.is_parttime == True if is_parttime else False)
+#                              & (skill_stats.experience_id == experience)
+#                              & (skill_stats.region_name == region.split('_')[1]) 
+#                              & (skill_stats.industry_group == int(industry_group))]
+# if skills_predict_stats.shape[0] == 0:
+#     skills_predict_stats = skill_stats[(skill_stats.is_vahta == False)
+#                              & (skill_stats.is_parttime == False)
+#                              & (skill_stats.experience_id == experience)
+#                              & (skill_stats.region_name == region.split('_')[1]) 
+#                              & (skill_stats.industry_group == int(industry_group))]
 
 
 if arr:
@@ -250,5 +250,5 @@ if arr:
                 
     else:
         if arr_spk:
-            st.subheader('К сожалению, нет доступных навыков. Попробуйте добавить ещё категорий.')
+            st.error('К сожалению, нет доступных навыков. Попробуйте добавить ещё категорий.')
     
