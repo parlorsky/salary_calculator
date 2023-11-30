@@ -6,7 +6,7 @@ import streamlit as st
 import os
 import catboost as cb 
 import re
-
+from tree_models import get_predict_tree
 
 PATTERN = r'\((\d+)'
 
@@ -237,10 +237,13 @@ if arr:
             #         change_prev_zp(str(prediction))
             #         st.subheader(f"AFTER:   prev_zp: {st.session_state['prev_zp']} predict: {prediction}")
 
-            prediction = js[str(float(experience))][str(True if vahta else False)][str(industry_group)][str(True if is_parttime else False)]['base']
-            for skill in skills_pciked:
-                prediction += js[str(float(experience))][str(True if vahta else False)][str(industry_group)][str(True if is_parttime else False)].get(skill, 0)
+            prediction, coef_reg = get_predict_tree(prof_id, vahta, experience, industry_group, region, skills_pciked)
+
+            # prediction = js[str(float(experience))][str(True if vahta else False)][str(industry_group)][str(True if is_parttime else False)]['base']
+            # for skill in skills_pciked:
+            #     prediction += js[str(float(experience))][str(True if vahta else False)][str(industry_group)][str(True if is_parttime else False)].get(skill, 0)
             # change_prev_zp(str(prediction))
+            
             st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
             # st.write(st.session_state)
 
