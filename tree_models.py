@@ -82,7 +82,6 @@ def get_predict_tree(n_bundle, vht, exp, ind, region_name, skills_pciked):
 
     with open(f'results/results3011_reg_coefs/{n_bundle}/{file_name}.json','r') as f:
         reg_coefs = json.load(f)
-    print(reg_coefs.keys())
     # print(x.get(region_name))
 
     try:
