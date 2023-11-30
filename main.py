@@ -237,7 +237,7 @@ if arr:
             #         change_prev_zp(str(prediction))
             #         st.subheader(f"AFTER:   prev_zp: {st.session_state['prev_zp']} predict: {prediction}")
 
-            st.subheader([23, 1, 0, 1, 'Республика Дагестан', np.array(['Аккуратность (СК) (575_4)'])])
+            st.subheader(f'Проверка sample')
 
             prediction = get_predict_tree(23, 1, 0, 1, 'Республика Дагестан', np.array(['Аккуратность (СК) (575_4)']))
 
