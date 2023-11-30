@@ -25,7 +25,9 @@ regions = pd.read_csv('regions.csv')
 # data = json.load(open('values.json'))
 professions = json.load(open('professions.json'))
 
-prof_list = list(professions.keys())
+aval_profs = [prof.rstrip('\n') for prof in open('avaliable_profs.txt', 'r', encoding='UTF-8').readlines()]
+
+prof_list = sorted(set(professions.keys()) & set(aval_profs))
 
 left_column, right_column = st.columns(2)
 
