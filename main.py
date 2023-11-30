@@ -237,7 +237,10 @@ if arr:
             #         change_prev_zp(str(prediction))
             #         st.subheader(f"AFTER:   prev_zp: {st.session_state['prev_zp']} predict: {prediction}")
 
+            st.subheader([prof_id, vahta, experience, industry_group, region, skills_pciked])
+
             prediction = get_predict_tree(prof_id, vahta, experience, industry_group, region, skills_pciked)
+
 
             # prediction = js[str(float(experience))][str(True if vahta else False)][str(industry_group)][str(True if is_parttime else False)]['base']
             # for skill in skills_pciked:
