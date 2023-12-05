@@ -25,9 +25,11 @@ regions = pd.read_csv('regions.csv')
 # data = json.load(open('values.json'))
 professions = json.load(open('professions.json'))
 
-aval_profs = [prof.rstrip('\n') for prof in open('avaliable_profs.txt', 'r', encoding='UTF-8').readlines()]
+# aval_profs = [prof.rstrip('\n') for prof in open('avaliable_profs.txt', 'r', encoding='UTF-8').readlines()]
 
-prof_list = sorted(set(professions.keys()) & set(aval_profs))
+# prof_list = sorted(set(professions.keys()) & set(aval_profs))
+
+prof_list = list(professions.keys())
 
 left_column, right_column = st.columns(2)
 
@@ -36,7 +38,7 @@ exp_conv_reverse = {'0':'Без опыта', '1':'От 1 до 3 лет','2':'О�
 
 inp_species = st.sidebar.selectbox( 
         'Наименование вакансии',
-        np.unique(prof_list), on_change=set_zp_null)
+        np.unique(prof_list))
 
 
 regions_list = []
@@ -47,7 +49,7 @@ for i in range(regions.shape[0]):
     # reg_list_view += [f'{regions["region_name"].iloc[i]}']
 
 
-prof_id = professions.get(inp_species, -1)
+prof_id = professions[inp_species]
 
 # st.text(prof_id)
 
