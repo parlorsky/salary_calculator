@@ -80,19 +80,19 @@ def get_predict_tree(n_bundle, vht, exp, ind, region_name, skills_pciked):
 
     file_name = f'{n_bundle}_vht_{vht}_exp_{exp}_ind_{ind}'
 
-    with open(f'results/results3011_reg_coefs/{n_bundle}/{file_name}.json','r') as f:
+    with open(f'results/results_reg_coefs/{n_bundle}/{file_name}.json','r') as f:
         reg_coefs = json.load(f)
     # print(x.get(region_name))
 
     try:
-        table_model = pd.read_excel(f'results/results2911_tabels_tree/{n_bundle}/{file_name}.xlsx')
+        table_model = pd.read_excel(f'results/results_tabels_tree/{n_bundle}/{file_name}.xlsx')
     except:
         return
     table_model['features_tuple'] = table_model['features'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else x)
     table_model['second_item'] = table_model['features_tuple'].apply(lambda x: x[1] if len(x) > 1 else None)
     arr = list(table_model['second_item'].iloc[1:])
     first_indexes = dict(sorted({x:arr.index(x)+1 for x in list(set(arr))}.items(), key=lambda x:x[1]))
-    table_model = pd.read_excel(f'results/results2911_tabels_tree/{n_bundle}/{file_name}.xlsx', index_col = 0)
+    table_model = pd.read_excel(f'results/results_tabels_tree/{n_bundle}/{file_name}.xlsx', index_col = 0)
 
 
 
