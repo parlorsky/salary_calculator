@@ -47,7 +47,7 @@ for i in range(regions.shape[0]):
     # reg_list_view += [f'{regions["region_name"].iloc[i]}']
 
 
-prof_id = professions[inp_species]
+prof_id = professions.get(inp_species, -1)
 
 # st.text(prof_id)
 
