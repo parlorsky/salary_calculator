@@ -194,7 +194,7 @@ if arr:
                     continue
                 used.add(name)
                 names_view = name[:re.search(PATTERN, name).start() - 1]
-                parent_check[name] = cols[col_index].checkbox(names_view)
+                parent_check[name] = cols[col_index].checkbox(names_view, value = True)
                 parent_name = name
                 if parent_check[parent_name]:
                     bd_parent_name = parent_name.replace(' ' + parent_name.split()[-1], '')
