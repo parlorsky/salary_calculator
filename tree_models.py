@@ -121,14 +121,11 @@ def get_predict_tree(n_bundle, vht, exp, ind, region_name, skills_pciked):
 
     # for lin_skill in not_in_match:
     #     salary += skill_values[lin_skill]
+    salary *= reg_coefs.get(region_name, 1)
     if len(not_in_match) == 0:
-        
-    
-        salary *= reg_coefs.get(region_name, 1)
-    
         return salary, reg_coefs.get(region_name, 1),()
     else:
-        return salary,0,not_in_match
+        return salary,0,nearest_match
 
 
 
