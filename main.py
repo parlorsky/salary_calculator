@@ -153,7 +153,7 @@ arr = st.multiselect('Виды:', groups_distr.keys())
 js = dict(json.load(open(f'jsones_skill_salary/{prof_id}.json')))
 
 top_skills = pd.read_csv(f'best_skills/{prof_id}/{prof_id}_vht_{vahta}_exp_{experience}_ind_{industry_group}.csv')
-top_k_skills = [x[x.index('(')-1:] for x in list(top_skills["Unnamed: 0"])]
+top_k_skills = [x[:x.index('(')-1] for x in list(top_skills["Unnamed: 0"])]
 st.write(top_k_skills)
 # skill_stats = pdx.read_csv(f'skills_salary_stats/results_version1/{prof_id}.csv')
 # skills_predict_stats = skill_stats[(skill_stats.is_vahta == True if vahta else False)
