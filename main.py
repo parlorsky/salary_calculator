@@ -152,7 +152,7 @@ arr = st.multiselect('Виды:', groups_distr.keys())
 
 js = dict(json.load(open(f'jsones_skill_salary/{prof_id}.json')))
 
-
+top_skills = pd.read_csv(f'best_skills/{prof_id}/{prof_id}_vht_{vahta}_exp_{experience}_ind_{industry_group}.csv')
 # skill_stats = pd.read_csv(f'skills_salary_stats/results_version1/{prof_id}.csv')
 # skills_predict_stats = skill_stats[(skill_stats.is_vahta == True if vahta else False)
 #                              & (skill_stats.is_parttime == True if is_parttime else False)
