@@ -208,7 +208,7 @@ if arr:
                                 used.add(children_name)
                                 names_view = children_name[:re.search(PATTERN, children_name).start() - 1]
                                 # cols[col_index].write(['1231', children_name, used])
-                                children_check[children_name] = cols[col_index].checkbox(names_view)
+                                children_check[children_name] = cols[col_index].checkbox(names_view, value = True)
                                     
 
             
