@@ -194,7 +194,7 @@ if arr:
                     continue
                 used.add(name)
                 names_view = name[:re.search(PATTERN, name).start() - 1]
-                parent_check[name] = cols[col_index].checkbox(names_view, values = [x for x in names_view if x in top_k_skills])
+                parent_check[name] = cols[col_index].checkbox(names_view, value = [x for x in names_view if x in top_k_skills])
                 parent_name = name
                 if parent_check[parent_name]:
                     bd_parent_name = parent_name.replace(' ' + parent_name.split()[-1], '')
@@ -208,7 +208,7 @@ if arr:
                                 used.add(children_name)
                                 names_view = children_name[:re.search(PATTERN, children_name).start() - 1]
                                 # cols[col_index].write(['1231', children_name, used])
-                                children_check[children_name] = cols[col_index].checkbox(names_view, values = [x for x in names_view if x in top_k_skills])
+                                children_check[children_name] = cols[col_index].checkbox(names_view, value = [x for x in names_view if x in top_k_skills])
                                     
 
             
