@@ -194,7 +194,7 @@ if arr:
                     continue
                 used.add(name)
                 names_view = name[:re.search(PATTERN, name).start() - 1]
-                parent_check[name] = cols[col_index].checkbox(names_view, value = [x for x in names_view if x in top_k_skills])
+                parent_check[name] = cols[col_index].checkbox(names_view)
                 parent_name = name
                 if parent_check[parent_name]:
                     bd_parent_name = parent_name.replace(' ' + parent_name.split()[-1], '')
@@ -208,7 +208,7 @@ if arr:
                                 used.add(children_name)
                                 names_view = children_name[:re.search(PATTERN, children_name).start() - 1]
                                 # cols[col_index].write(['1231', children_name, used])
-                                children_check[children_name] = cols[col_index].checkbox(names_view, value = [x for x in names_view if x in top_k_skills])
+                                children_check[children_name] = cols[col_index].checkbox(names_view)
                                     
 
             
@@ -218,7 +218,7 @@ if arr:
 
             # st.subheader("Выберите навыки для подсчета зарплаты по вакансии.")
         skills = [int(parent_check.get(name, 0) or  children_check.get(name, 0)) for name in model.feature_names_[6:]]
-        skills_pciked = np.array(model.feature_names_[6:])[[True if el else False for el in skills]]
+        skills_pciked = np.array(model.feature_names_[6:])[[True if el else 1 for el in skills]]
 
         # st.subheader(f'{skills_pciked}')
         # st.subheader(f'{skills}')
