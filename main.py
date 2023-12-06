@@ -251,7 +251,7 @@ if arr:
             #     prediction += js[str(float(experience))][str(True if vahta else False)][str(industry_group)][str(True if is_parttime else False)].get(skill, 0)
             # change_prev_zp(str(prediction))
             
-            st.subheader(f"Предсказание: {round(prediction//100*100)} руб.Регион. коэф: {rg_cf}")
+            st.subheader(f"Предсказание: {round(prediction//100*100)} руб.")
             # st.write(st.session_state)
 
             # st.subheader(f'{old_pred }')
