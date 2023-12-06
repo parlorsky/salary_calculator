@@ -128,7 +128,7 @@ def get_predict_tree(n_bundle, vht, exp, ind, region_name, skills_pciked):
     
         return salary, reg_coefs.get(region_name, 1),()
     else:
-        return 0,0,not_in_match
+        return salary,0,not_in_match
 
 
 
