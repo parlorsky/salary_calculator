@@ -187,7 +187,7 @@ if arr:
     available_skills = group_set & spk_set
     if available_skills:
 
-        for index, name in enumerate(available_skills):
+        for index, name in enumerate(sorted(available_skills, key = lambda x: x.lower())):
             col_index = int(index > len(available_skills) // 2)
             if names_to_skill_id[name.replace(' ' + name.split()[-1], '')] in parents_to_children:
                 if name in used:
