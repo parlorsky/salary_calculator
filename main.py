@@ -153,6 +153,7 @@ arr = st.multiselect('Виды:', groups_distr.keys())
 js = dict(json.load(open(f'jsones_skill_salary/{prof_id}.json')))
 
 top_skills = pd.read_csv(f'best_skills/{prof_id}/{prof_id}_vht_{vahta}_exp_{experience}_ind_{industry_group}.csv')
+top_k_skills = list(top_skills.values())[:5]
 # skill_stats = pd.read_csv(f'skills_salary_stats/results_version1/{prof_id}.csv')
 # skills_predict_stats = skill_stats[(skill_stats.is_vahta == True if vahta else False)
 #                              & (skill_stats.is_parttime == True if is_parttime else False)
@@ -193,7 +194,7 @@ if arr:
                     continue
                 used.add(name)
                 names_view = name[:re.search(PATTERN, name).start() - 1]
-                parent_check[name] = cols[col_index].checkbox(names_view)
+                parent_check[name] = cols[col_index].checkbox(names_view, values = [x for x in names_view if x in top_k_skills])
                 parent_name = name
                 if parent_check[parent_name]:
                     bd_parent_name = parent_name.replace(' ' + parent_name.split()[-1], '')
@@ -207,7 +208,7 @@ if arr:
                                 used.add(children_name)
                                 names_view = children_name[:re.search(PATTERN, children_name).start() - 1]
                                 # cols[col_index].write(['1231', children_name, used])
-                                children_check[children_name] = cols[col_index].checkbox(names_view)
+                                children_check[children_name] = cols[col_index].checkbox(names_view, values = [x for x in names_view if x in top_k_skills])
                                     
 
             
