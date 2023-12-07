@@ -2,6 +2,7 @@ import pandas as pd
 import ast
 import os
 import json
+import streamlit as st
 
 def get_folders_sorted_by_size(directory):
     folders = [os.path.join(directory, d) for d in os.listdir(directory) if os.path.isdir(os.path.join(directory, d))]
@@ -120,14 +121,15 @@ def get_predict_tree(n_bundle, vht, exp, ind, region_name, skills_pciked):
     nearest_match, _, salary, not_in_match = find_matching_combination_in_dataframe(pd.concat([table_model.iloc[first_index:last_index+1], table_model.iloc[-1].to_frame().T]), active_skills)
     linear_part = 0
     for lin_skill in not_in_match:
-         salary += skill_values[lin_skill]
-         # linear_part += skill_values[lin_skill]
+        linear_part += skill_values[lin_skill]
+        salary += skill_values[lin_skill]
+         
     salary *= reg_coefs.get(region_name, 1)
 
     st.write('ближайший существующий ',nearest_match)
     st.write('не входят', not_in_match)
     st.write('зп в узле', salary)
-    # st.write('добавлено линейно', linear_part)
+    st.write('добавлено линейно', linear_part)
     # if len(not_in_match) == 0:
     if salary < 16250:
         salary = 16250
