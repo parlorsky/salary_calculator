@@ -16,7 +16,7 @@ def get_folders_sorted_by_size(directory):
 
     return sorted_folders
 
-def find_matching_combination_in_dataframe(dataframe, target_input):
+def find_matching_combination_in_dataframe(dataframe,df, target_input):
     """
     Поиск самой длинной соответствующей последовательности элементов в индексе DataFrame в сравнении с целевым вводом.
 
@@ -66,7 +66,7 @@ def find_matching_combination_in_dataframe(dataframe, target_input):
             elements_not_in_longest_match = target_tuple[matches:]
             # Попытка найти цену для наибольшего совпадения в DataFrame
             try:
-                match_price = dataframe.loc[str(longest_match), 'price']
+                match_price = df.loc[str(longest_match), 'price']
                 if match_price > longest_match_price:
                     longest_match_price = match_price
                     longest_match = features_tuple[:matches]
@@ -77,7 +77,7 @@ def find_matching_combination_in_dataframe(dataframe, target_input):
                 # В случае отсутствия совпадения, по умолчанию используется свойства элемента 'root'
                 longest_match = ('root',)
                 longest_match_count = 1
-                longest_match_price = dataframe.loc["('root',)", 'price']
+                longest_match_price = df.loc["('root',)", 'price']
                 elements_not_in_longest_match = target_tuple[matches:]
 
     return longest_match, longest_match_count, longest_match_price, elements_not_in_longest_match
@@ -183,7 +183,7 @@ def get_predict_tree(n_bundle, vht, exp, ind, region_name, skills_pciked):
         first_index = 0
         last_index = 1
     active_skills = str(active_skills).replace('\\xa0',' ')
-    nearest_match, _, salary, not_in_match = find_matching_combination_in_dataframe(pd.concat([table_model.iloc[first_index:last_index+1], table_model.iloc[-1].to_frame().T]), active_skills)
+    nearest_match, _, salary, not_in_match = find_matching_combination_in_dataframe(pd.concat([table_model.iloc[first_index:last_index+1], table_model.iloc[-1].to_frame().T]),table_model, active_skills)
     linear_part = 0
     for lin_skill in not_in_match:
         linear_part += skill_values[lin_skill]
