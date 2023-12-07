@@ -60,7 +60,7 @@ def find_matching_combination_in_dataframe(dataframe,df, target_input):
                 matches += 1
             
         # Обновление информации о наибольшем совпадении, если это наибольшее совпадение на данный момент
-        if matches > longest_match_count:
+        if matches >= longest_match_count :
             longest_match = features_tuple[:matches]
             longest_match_count = matches
             elements_not_in_longest_match = target_tuple[matches:]
@@ -79,6 +79,7 @@ def find_matching_combination_in_dataframe(dataframe,df, target_input):
                 longest_match_count = 1
                 longest_match_price = df.loc["('root',)", 'price']
                 elements_not_in_longest_match = target_tuple[matches:]
+        
 
     return longest_match, longest_match_count, longest_match_price, elements_not_in_longest_match
 
