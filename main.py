@@ -272,7 +272,7 @@ if arr:
             #     prediction += js[str(float(experience))][str(True if vahta else False)][str(industry_group)][str(True if is_parttime else False)].get(skill, 0)
             # change_prev_zp(str(prediction))
             if rg_cf != 0 :
-                st.write(f"Предсказание: {round(prediction//100*100)} руб.")
+                st.write(f"Предсказание: {round(prediction//100*100)} руб. Коэффициент региона: {round(rg_cf,3)}")
             else:
                 st.write('Такой комбинации нет, ближайшее значение:', nearest)
                 st.write(f"Предсказание: {round(prediction//100*100)} руб.")
