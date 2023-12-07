@@ -65,20 +65,20 @@ def find_matching_combination_in_dataframe(dataframe,df, target_input):
             longest_match_count = matches
             elements_not_in_longest_match = target_tuple[matches:]
             # Попытка найти цену для наибольшего совпадения в DataFrame
-            try:
-                match_price = df.loc[str(longest_match), 'price']
-                if match_price > longest_match_price:
-                    longest_match_price = match_price
-                    longest_match = features_tuple[:matches]
-                    longest_match_count = matches
-                    elements_not_in_longest_match = target_tuple[matches:]
-                    
-            except KeyError:
-                # В случае отсутствия совпадения, по умолчанию используется свойства элемента 'root'
-                longest_match = ('root',)
-                longest_match_count = 1
-                longest_match_price = df.loc["('root',)", 'price']
+            # try:
+            match_price = df.loc[str(longest_match), 'price']
+            if match_price >= longest_match_price:
+                longest_match_price = match_price
+                longest_match = features_tuple[:matches]
+                longest_match_count = matches
                 elements_not_in_longest_match = target_tuple[matches:]
+                    
+            # except KeyError:
+            #     # В случае отсутствия совпадения, по умолчанию используется свойства элемента 'root'
+            #     longest_match = ('root',)
+            #     longest_match_count = 1
+            #     longest_match_price = df.loc["('root',)", 'price']
+            #     elements_not_in_longest_match = target_tuple[matches:]
         
 
     return longest_match, longest_match_count, longest_match_price, elements_not_in_longest_match
