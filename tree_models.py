@@ -119,13 +119,13 @@ def get_predict_tree(n_bundle, vht, exp, ind, region_name, skills_pciked):
     active_skills = str(active_skills).replace('\\xa0',' ')
     nearest_match, _, salary, not_in_match = find_matching_combination_in_dataframe(pd.concat([table_model.iloc[first_index:last_index+1], table_model.iloc[-1].to_frame().T]), active_skills)
 
-    # for lin_skill in not_in_match:
-    #     salary += skill_values[lin_skill]
+    for lin_skill in not_in_match:
+         salary += skill_values[lin_skill]
     salary *= reg_coefs.get(region_name, 1)
-    if len(not_in_match) == 0:
-        return salary, reg_coefs.get(region_name, 1),()
-    else:
-        return salary,0,nearest_match
+    # if len(not_in_match) == 0:
+    return salary, reg_coefs.get(region_name, 1),()
+    # else:
+        # return salary,0,nearest_match
 
 
 
