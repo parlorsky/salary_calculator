@@ -16,7 +16,6 @@ def get_folders_sorted_by_size(directory):
 
     return sorted_folders
 
-
 def find_matching_combination_in_dataframe(dataframe, target_input):
     """
     Поиск самой длинной соответствующей последовательности элементов в индексе DataFrame в сравнении с целевым вводом.
@@ -42,7 +41,7 @@ def find_matching_combination_in_dataframe(dataframe, target_input):
     # Инициализация переменных для хранения наилучшего найденного совпадения
     longest_match = None
     longest_match_count = 0
-    longest_match_price = None
+    longest_match_price = 0
     elements_not_in_longest_match = None
 
     # Итерация по каждому кортежу в индексе DataFrame
@@ -51,12 +50,15 @@ def find_matching_combination_in_dataframe(dataframe, target_input):
 
         # Подсчет совпадающих элементов в последовательности до возникновения несоответствия
         matches = 0
-        for i, j in zip(features_tuple, target_tuple):
-            if i == j:
+        # for i, j in zip(features_tuple, target_tuple):
+        #     if i == j:
+        #         matches += 1
+        #     else:
+        #         break  # Найдено несоответствие, дальнейшее сравнение прекращается
+        for i in features_tuple:
+            if i in target_tuple:
                 matches += 1
-            else:
-                break  # Найдено несоответствие, дальнейшее сравнение прекращается
-
+            
         # Обновление информации о наибольшем совпадении, если это наибольшее совпадение на данный момент
         if matches > longest_match_count:
             longest_match = features_tuple[:matches]
@@ -64,7 +66,13 @@ def find_matching_combination_in_dataframe(dataframe, target_input):
             elements_not_in_longest_match = target_tuple[matches:]
             # Попытка найти цену для наибольшего совпадения в DataFrame
             try:
-                longest_match_price = dataframe.loc[str(longest_match), 'price']
+                match_price = dataframe.loc[str(longest_match), 'price']
+                if match_price > longest_match_price:
+                    longest_match_price = match_price
+                    longest_match = features_tuple[:matches]
+                    longest_match_count = matches
+                    elements_not_in_longest_match = target_tuple[matches:]
+                    
             except KeyError:
                 # В случае отсутствия совпадения, по умолчанию используется свойства элемента 'root'
                 longest_match = ('root',)
@@ -73,6 +81,63 @@ def find_matching_combination_in_dataframe(dataframe, target_input):
                 elements_not_in_longest_match = target_tuple[matches:]
 
     return longest_match, longest_match_count, longest_match_price, elements_not_in_longest_match
+
+# def find_matching_combination_in_dataframe(dataframe, target_input):
+#     """
+#     Поиск самой длинной соответствующей последовательности элементов в индексе DataFrame в сравнении с целевым вводом.
+
+#     Эта функция проверяет каждый кортеж в индексе DataFrame и сравнивает его с целевым вводом.
+#     Сравнение происходит поэлементно и в порядке следования. Функция возвращает самую длинную последовательность
+#     совпадающих элементов до первого несоответствия, а также дополнительную информацию о совпадении.
+
+#     Параметры:
+#     - dataframe: Pandas DataFrame с кортежами в качестве значений индекса.
+#     - target_input: Последовательность ввода для сопоставления с индексом DataFrame. Может быть строкой или кортежем.
+
+#     Возвращает:
+#     - Кортеж, содержащий:
+#         1. Самую длинную совпадающую последовательность (до первого несоответствия)
+#         2. Количество элементов в самой длинной совпадающей последовательности
+#         3. Цену, связанную с самой длинной совпадающей последовательностью в DataFrame
+#         4. Элементы целевого ввода, которые не были частью совпадения
+#     """
+#     # Преобразование целевого ввода в кортеж, если это строковое представление кортежа
+#     target_tuple = eval(target_input) if isinstance(target_input, str) else target_input
+
+#     # Инициализация переменных для хранения наилучшего найденного совпадения
+#     longest_match = None
+#     longest_match_count = 0
+#     longest_match_price = None
+#     elements_not_in_longest_match = None
+
+#     # Итерация по каждому кортежу в индексе DataFrame
+#     for features_str in dataframe.index:
+#         features_tuple = eval(features_str)
+
+#         # Подсчет совпадающих элементов в последовательности до возникновения несоответствия
+#         matches = 0
+#         for i, j in zip(features_tuple, target_tuple):
+#             if i == j:
+#                 matches += 1
+#             else:
+#                 break  # Найдено несоответствие, дальнейшее сравнение прекращается
+
+#         # Обновление информации о наибольшем совпадении, если это наибольшее совпадение на данный момент
+#         if matches > longest_match_count:
+#             longest_match = features_tuple[:matches]
+#             longest_match_count = matches
+#             elements_not_in_longest_match = target_tuple[matches:]
+#             # Попытка найти цену для наибольшего совпадения в DataFrame
+#             try:
+#                 longest_match_price = dataframe.loc[str(longest_match), 'price']
+#             except KeyError:
+#                 # В случае отсутствия совпадения, по умолчанию используется свойства элемента 'root'
+#                 longest_match = ('root',)
+#                 longest_match_count = 1
+#                 longest_match_price = dataframe.loc["('root',)", 'price']
+#                 elements_not_in_longest_match = target_tuple[matches:]
+
+#     return longest_match, longest_match_count, longest_match_price, elements_not_in_longest_match
 
 
 def get_predict_tree(n_bundle, vht, exp, ind, region_name, skills_pciked):
