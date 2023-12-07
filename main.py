@@ -7,7 +7,7 @@ import os
 import catboost as cb 
 import re
 from tree_models import get_predict_tree
-
+import ast
 PATTERN = r'\((\d+)'
 
 def set_zp_null():
@@ -168,6 +168,8 @@ top_k_skills = [x[:x.index('(')-1] for x in list(top_skills["Unnamed: 0"])][:8]
 #                              & (skill_stats.industry_group == int(industry_group))]
 
 
+
+
 if arr:
     skills_all = model.feature_names_[6:]
     st.subheader("Выберите вид СПК")
@@ -251,7 +253,7 @@ if arr:
             #     prediction += js[str(float(experience))][str(True if vahta else False)][str(industry_group)][str(True if is_parttime else False)].get(skill, 0)
             # change_prev_zp(str(prediction))
             if rg_cf != 0 :
-                st.write(f"Предсказание: {round(prediction//100*100)} руб.")
+                st.write(f"Предсказание: {round(prediction//100*100)} руб. Коэффициент региона: {round(rg_cf,3)}")
             else:
                 st.write('Такой комбинации нет, ближайшее значение:', nearest)
                 st.write(f"Предсказание: {round(prediction//100*100)} руб.")
