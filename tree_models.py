@@ -128,7 +128,7 @@ def get_predict_tree(n_bundle, vht, exp, ind, region_name, skills_pciked):
 
     st.write('ближайший существующий ',nearest_match)
     st.write('не входят', not_in_match)
-    st.write('зп в узле', salary)
+    st.write('зп в узле', salary-linear_part)
     st.write('добавлено линейно', linear_part)
     # if len(not_in_match) == 0:
     if salary < 16250:
