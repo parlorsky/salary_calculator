@@ -183,7 +183,8 @@ def get_predict_tree(n_bundle, vht, exp, ind, region_name, skills_pciked):
         first_index = 0
         last_index = 1
     active_skills = str(active_skills).replace('\\xa0',' ')
-    nearest_match, _, salary, not_in_match = find_matching_combination_in_dataframe(pd.concat([table_model.iloc[first_index:last_index+1], table_model.iloc[-1].to_frame().T]),table_model, active_skills)
+    # pd.concat([table_model.iloc[first_index:last_index+1], table_model.iloc[-1].to_frame().T])
+    nearest_match, _, salary, not_in_match = find_matching_combination_in_dataframe(table_model,table_model, active_skills)
     linear_part = 0
     for lin_skill in not_in_match:
         linear_part += skill_values[lin_skill]
