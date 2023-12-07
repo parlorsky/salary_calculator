@@ -168,26 +168,7 @@ top_k_skills = [x[:x.index('(')-1] for x in list(top_skills["Unnamed: 0"])][:8]
 #                              & (skill_stats.industry_group == int(industry_group))]
 
 
-file_name = f'{prof_id}_vht_{vahta}_exp_{experience}_ind_{industry_group}'
 
-with open(f'results/results_reg_coefs/{prof_id}/{file_name}.json','r') as f:
-    reg_coefs = json.load(f)
-# print(x.get(region_name))
-
-try:
-    table_model = pd.read_excel(f'results/results_tabels_tree/{prof_id}/{file_name}.xlsx')
-except:
-    st.write('Данной комбинации настроек не существует, попробуйте другую')
-table_model['features_tuple'] = table_model['features'].apply(lambda x: ast.literal_eval(x) if isinstance(x, str) else x)
-table_model['second_item'] = table_model['features_tuple'].apply(lambda x: x[1] if len(x) > 1 else None)
-arr = list(table_model['second_item'].iloc[1:])
-first_indexes = dict(sorted({x:arr.index(x)+1 for x in list(set(arr))}.items(), key=lambda x:x[1]))
-table_model = pd.read_excel(f'results/results_tabels_tree/{prof_id}/{file_name}.xlsx', index_col = 0)
-
-
-
-with open(f'jsones_skill_salary/{prof_id}.json', 'r') as f:
-    linear_model = json.load(f)
 
 if arr:
     skills_all = model.feature_names_[6:]
@@ -264,7 +245,7 @@ if arr:
             #         st.subheader(f"AFTER:   prev_zp: {st.session_state['prev_zp']} predict: {prediction}")
 
 
-            prediction, rg_cf, nearest = get_predict_tree(int(prof_id), int(vahta), int(experience), int(industry_group), region.split('_')[-1], skills_pciked,reg_coefs,table_model,first_indexes,linear_model)
+            prediction, rg_cf, nearest = get_predict_tree(int(prof_id), int(vahta), int(experience), int(industry_group), region.split('_')[-1], skills_pciked)
 
 
             # prediction = js[str(float(experience))][str(True if vahta else False)][str(industry_group)][str(True if is_parttime else False)]['base']
