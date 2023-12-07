@@ -168,7 +168,7 @@ top_k_skills = [x[:x.index('(')-1] for x in list(top_skills["Unnamed: 0"])][:8]
 #                              & (skill_stats.industry_group == int(industry_group))]
 
 
-file_name = f'{prof_id}_vht_{vht}_exp_{exp}_ind_{ind}'
+file_name = f'{prof_id}_vht_{vahta}_exp_{experience}_ind_{industry_group}'
 
 with open(f'results/results_reg_coefs/{prof_id}/{file_name}.json','r') as f:
     reg_coefs = json.load(f)
