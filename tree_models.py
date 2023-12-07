@@ -187,15 +187,16 @@ def get_predict_tree(n_bundle, vht, exp, ind, region_name, skills_pciked):
     # pd.concat([table_model.iloc[first_index:last_index+1], table_model.iloc[-1].to_frame().T])
     nearest_match, _, salary, not_in_match = find_matching_combination_in_dataframe(table_model,table_model, active_skills)
     linear_part = 0
+    st.write('ближайший существующий ',nearest_match)
+    st.write('не входят', not_in_match)
+    st.write('зп в узле', salary)
     for lin_skill in not_in_match:
         linear_part += skill_values[lin_skill]
         salary += skill_values[lin_skill]
          
     salary *= reg_coefs.get(region_name, 1)
 
-    st.write('ближайший существующий ',nearest_match)
-    st.write('не входят', not_in_match)
-    st.write('зп в узле', salary-linear_part)
+    
     st.write('добавлено линейно', linear_part)
     # if len(not_in_match) == 0:
     if salary < 16250:
