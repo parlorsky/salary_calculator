@@ -152,8 +152,9 @@ arr = st.multiselect('Виды:', groups_distr.keys())
 
 js = dict(json.load(open(f'jsones_skill_salary/{prof_id}.json')))
 
-
-# skill_stats = pd.read_csv(f'skills_salary_stats/results_version1/{prof_id}.csv')
+top_skills = pd.read_csv(f'best_skills/{prof_id}/{prof_id}_vht_{vahta}_exp_{experience}_ind_{industry_group}.csv')
+top_k_skills = [x[:x.index('(')-1] for x in list(top_skills["Unnamed: 0"])][:8]
+# skill_stats = pdx.read_csv(f'skills_salary_stats/results_version1/{prof_id}.csv')
 # skills_predict_stats = skill_stats[(skill_stats.is_vahta == True if vahta else False)
 #                              & (skill_stats.is_parttime == True if is_parttime else False)
 #                              & (skill_stats.experience_id == experience)
@@ -186,14 +187,14 @@ if arr:
     available_skills = group_set & spk_set
     if available_skills:
 
-        for index, name in enumerate(available_skills):
+        for index, name in enumerate(sorted(available_skills, key = lambda x: x.lower())):
             col_index = int(index > len(available_skills) // 2)
             if names_to_skill_id[name.replace(' ' + name.split()[-1], '')] in parents_to_children:
                 if name in used:
                     continue
                 used.add(name)
                 names_view = name[:re.search(PATTERN, name).start() - 1]
-                parent_check[name] = cols[col_index].checkbox(names_view)
+                parent_check[name] = cols[col_index].checkbox(names_view, value = True if names_view in top_k_skills else False)
                 parent_name = name
                 if parent_check[parent_name]:
                     bd_parent_name = parent_name.replace(' ' + parent_name.split()[-1], '')
@@ -242,15 +243,18 @@ if arr:
             #         st.subheader(f"AFTER:   prev_zp: {st.session_state['prev_zp']} predict: {prediction}")
 
 
-            prediction, rg_cf = get_predict_tree(int(prof_id), int(vahta), int(experience), int(industry_group), region.split('_')[-1], skills_pciked)
+            prediction, rg_cf, nearest = get_predict_tree(int(prof_id), int(vahta), int(experience), int(industry_group), region.split('_')[-1], skills_pciked)
 
 
             # prediction = js[str(float(experience))][str(True if vahta else False)][str(industry_group)][str(True if is_parttime else False)]['base']
             # for skill in skills_pciked:
             #     prediction += js[str(float(experience))][str(True if vahta else False)][str(industry_group)][str(True if is_parttime else False)].get(skill, 0)
             # change_prev_zp(str(prediction))
-            
-            st.subheader(f"Предсказание: {round(prediction//100*100)} руб.Регион. коэф: {rg_cf}")
+            if rg_cf != 0 :
+                st.write(f"Предсказание: {round(prediction//100*100)} руб.")
+            else:
+                st.write('Такой комбинации нет, ближайшее значение:', nearest)
+                st.write(f"Предсказание: {round(prediction//100*100)} руб.")
             # st.write(st.session_state)
 
             # st.subheader(f'{old_pred }')
