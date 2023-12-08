@@ -61,6 +61,7 @@ def find_matching_combination_in_dataframe(dataframe,df, target_input):
             
         # Обновление информации о наибольшем совпадении, если это наибольшее совпадение на данный момент
         if matches >= longest_match_count:
+            if matches == len(target_tuple) and features_tuple != target_tuple: continue
             longest_match = features_tuple[:matches]
             longest_match_count = matches
             elements_not_in_longest_match = target_tuple[matches:]
