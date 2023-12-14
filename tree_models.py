@@ -306,9 +306,9 @@ def get_predict_tree(n_bundle, vht, exp, ind, region_name, skills_pciked):
     st.write('ближайший существующий ',nearest_match)
     st.write('не входят', not_in_match)
     st.write('зп в узле', salary)
-    for lin_skill in not_in_match:
-        linear_part += skill_values[lin_skill]
-        salary += skill_values[lin_skill]
+    # for lin_skill in not_in_match:
+    #     linear_part += skill_values[lin_skill]
+    #     salary += skill_values[lin_skill]
          
     salary *= reg_coefs.get(region_name, 1)
 
