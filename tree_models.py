@@ -155,8 +155,10 @@ def find_matching_combination_in_dataframe(dataframe,df, target_input):
                 matches += 1
         # print(matches)
         # Обновление информации о наибольшем совпадении, если это наибольшее совпадение на данный момент
+
+        bound = 1 if len(target_tuple) > 2 else len(target_tuple)//2
         match_price = df.loc[features_str, 'price']
-        if match_price > longest_match_price and matches > 1:
+        if match_price > longest_match_price and matches > bound:
             if matches == len(target_tuple) and features_tuple != target_tuple: continue            
             longest_match = tuple([x for x in features_tuple if x in target_tuple])
             longest_match_count = matches
