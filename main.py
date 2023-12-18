@@ -65,9 +65,13 @@ is_parttime = 1 if st.sidebar.checkbox('Неполная занятость', on
 st.header(f"Оценка стоимости навыков {inp_species}")
 
 st.sidebar.subheader("Выберите регион вакансии")
+region_out = {reg: reg.split('_')[-1] for reg in regions_list}
+region_in = {value: key for key, value in region_out.items()}
 region = st.sidebar.selectbox(
     'Напишите регион вакансии',
-    (regions_list), on_change=set_zp_null)
+    (list(region_out.values())), on_change=set_zp_null)
+
+region = region_in[region]
 
 industry_group = str(regions[regions['region_name'] == region.split('_')[1]]['industry_group'].iloc[0])
 
